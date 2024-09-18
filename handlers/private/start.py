@@ -2,7 +2,7 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 
 from filters import PrivateFilter
-from loader import dp
+from loader import dp, db
 
 
 @dp.message(PrivateFilter(), CommandStart())
