@@ -3,14 +3,25 @@ import re
 
 from aiogram import types
 from aiogram.enums import ContentType
-from aiogram.filters import StateFilter
+from aiogram.filters import StateFilter, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
 from config import LEVELS
+from filters import PrivateFilter
 from loader import dp, db
 from states import Registration
 from keyboards.default import get_contact_markup, levels_markup, main_manu
+
+
+@dp.message(PrivateFilter(), CommandStart())
+async def command_start(message: types.Message, state: FSMContext):
+    user = await db.get_user(message.from_user.id)
+    if not user:
+        await start_registration(message, state)
+    else:
+        await message.answer("Bosh menyu", reply_markup=await main_manu(lang=user['language']))
+        await state.clear()
 
 
 async def start_registration(message: types.Message, state: FSMContext):
