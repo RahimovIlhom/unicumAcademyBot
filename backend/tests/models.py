@@ -7,8 +7,8 @@ from users.models import BotUser
 class Question(models.Model):
     level = models.CharField(max_length=20, choices=LEVELS)
     image = models.ImageField(blank=True, null=True, upload_to='questions/images/')
-    question = models.TextField(blank=True, null=True)
-    a = models.CharField(max_length=255)
+    question = models.TextField(default="Question does not exist", blank=True, null=True)
+    a = models.CharField(max_length=255, verbose_name="Correct answer")
     b = models.CharField(max_length=255)
     c = models.CharField(max_length=255)
     d = models.CharField(max_length=255)

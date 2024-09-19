@@ -38,7 +38,7 @@ class Database:
                 await cur.execute(query, args)
                 await conn.commit()
 
-    async def fetchone(self, query: str, *args) -> dict:
+    async def fetchone(self, query: str, *args) -> dict | None:
         """
         Execute: SELECT one value
         :param query: sql query
@@ -46,7 +46,7 @@ class Database:
         :return: dict
         """
         async with self.pool.acquire() as conn:
-            async with conn.cursor() as cur:
+            async with conn.cursor(aiomysql.DictCursor) as cur:
                 await cur.execute(query, args)
                 result = await cur.fetchone()
                 return result
@@ -59,7 +59,7 @@ class Database:
         :return: list[dict]
         """
         async with self.pool.acquire() as conn:
-            async with conn.cursor() as cur:
+            async with conn.cursor(aiomysql.DictCursor) as cur:
                 await cur.execute(query, args)
                 result = await cur.fetchall()
                 return result
@@ -90,3 +90,38 @@ class Database:
                 (%s, %s, %s, %s, 'uz', %s, NULL, NULL, CURDATE(), CURDATE())
         """
         await self.execute(sql, telegramId, fullname, contact, phone, selectedLevel)
+
+    async def get_user(self, telegramId) -> dict:
+        sql = """
+            SELECT 
+                telegramId,
+                fullname,
+                telegramContact,
+                phoneNumber,
+                language,
+                selectedLevel,
+                confirmedLevel,
+                recommendedLevel,
+                registrationDate,
+                updatedDate 
+            FROM bot_users 
+            WHERE telegramId = %s
+        """
+        return await self.fetchone(sql, telegramId)
+
+    async def get_users(self):
+        sql = """
+            SELECT 
+                telegramId,
+                fullname,
+                telegramContact,
+                phoneNumber,
+                language,
+                selectedLevel,
+                confirmedLevel,
+                recommendedLevel,
+                registrationDate,
+                updatedDate 
+            FROM bot_users 
+        """
+        return await self.fetchall(sql)
