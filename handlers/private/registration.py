@@ -1,7 +1,9 @@
+import asyncio
 import re
 
 from aiogram import types
 from aiogram.enums import ContentType
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
@@ -29,8 +31,9 @@ async def get_name(message: types.Message, state: FSMContext):
 # Telegram kontaktini qabul qilish
 @dp.message(Registration.contact, lambda msg: msg.content_type==ContentType.CONTACT)
 async def get_contact(message: types.Message, state: FSMContext):
-    await state.update_data(contact=message.contact.phone_number)
-    await message.answer("Qo'shimcha telefon raqamingizni kiriting:", reply_markup=ReplyKeyboardRemove())
+    await state.update_data(contact=message.contact.phone_number.replace('+', ''))
+    await message.answer("Qo'shimcha telefon raqamingizni kiriting:\n"
+                         "Masalan: +998901234567", reply_markup=ReplyKeyboardRemove())
     await state.set_state(Registration.phone)
 
 
@@ -65,5 +68,13 @@ async def get_level(message: types.Message, state: FSMContext):
     await state.clear()
 
     # Testga taklif qilish
-    await message.answer("Siz muvaffaqiyatli ro'yxatdan o'tdingiz. Darajangizni tasdiqlash uchun test topshirishingiz kerak.\n"
+    await message.answer("✅ Siz muvaffaqiyatli ro'yxatdan o'tdingiz. Darajangizni tasdiqlash uchun test topshirishingiz kerak.\n"
                          "'Test boshlash' tugmasini bosing.", reply_markup=await main_manu())
+
+
+@dp.message(StateFilter(Registration))
+async def error_message(message: types.Message):
+    await message.delete()
+    er_msg = await message.answer("⚠️ <b>Xato ma'lumot!</b>\nIltimos, ko'rsatmalarga amal qilgan holda kerakli ma'lumotni to'g'ri formatda kiriting.")
+    await asyncio.sleep(3)
+    await er_msg.delete()

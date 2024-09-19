@@ -1,6 +1,5 @@
 from django.db import models
 
-# Define choices for language and levels
 LANGUAGES = (
     ('uz', 'Uzbek'),
 )
@@ -25,8 +24,8 @@ class BotUser(models.Model):
     selectedLevel = models.CharField(max_length=20, choices=LEVELS, default='beginner')
     confirmedLevel = models.CharField(max_length=20, choices=LEVELS, default=None, blank=True, null=True)
     recommendedLevel = models.CharField(max_length=20, choices=LEVELS, default=None, blank=True, null=True)
-    registrationDate = models.DateField(auto_now_add=True)
-    updatedDate = models.DateField(auto_now=True)
+    registeredAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.fullname

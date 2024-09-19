@@ -84,10 +84,10 @@ class Database:
                  selectedLevel,
                  confirmedLevel,
                  recommendedLevel,
-                 registrationDate,
-                 updatedDate)
+                 registeredAt,
+                 updatedAt)
             VALUES
-                (%s, %s, %s, %s, 'uz', %s, NULL, NULL, CURDATE(), CURDATE())
+                (%s, %s, %s, %s, 'uz', %s, NULL, NULL, NOW(), NOW())
         """
         await self.execute(sql, telegramId, fullname, contact, phone, selectedLevel)
 
@@ -102,8 +102,8 @@ class Database:
                 selectedLevel,
                 confirmedLevel,
                 recommendedLevel,
-                registrationDate,
-                updatedDate 
+                registeredAt,
+                updatedAt 
             FROM bot_users 
             WHERE telegramId = %s
         """
@@ -120,8 +120,8 @@ class Database:
                 selectedLevel,
                 confirmedLevel,
                 recommendedLevel,
-                registrationDate,
-                updatedDate 
+                registeredAt,
+                updatedAt 
             FROM bot_users 
         """
         return await self.fetchall(sql)

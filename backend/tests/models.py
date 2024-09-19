@@ -12,6 +12,7 @@ class Question(models.Model):
     b = models.CharField(max_length=255)
     c = models.CharField(max_length=255)
     d = models.CharField(max_length=255)
+    createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.level}: question-{self.pk}"
@@ -29,7 +30,7 @@ class TestResult(models.Model):
     resultScore = models.DecimalField(max_digits=5, decimal_places=2)
     resultDataJSON = models.JSONField()
     recommendedLevel = models.CharField(max_length=20, choices=LEVELS, blank=True, null=True)
-    resultDate = models.DateField()
+    resultedAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.fullname}: {self.resultScore}"
