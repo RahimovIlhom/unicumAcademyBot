@@ -4,6 +4,5 @@ LEVELS = (
     '🔵 Pre-Intermediate',
     '🟣 Intermediate',
     '🟠 Upper-Intermediate',
-    '🔴 Advanced',
-    '⚫ Proficient',
+    '🔴 Advanced'
 )

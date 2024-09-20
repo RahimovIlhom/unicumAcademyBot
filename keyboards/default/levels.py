@@ -5,7 +5,6 @@ from config import LEVELS
 
 
 async def levels_markup(lang: str = 'uz') -> ReplyKeyboardMarkup:
-
     contact_markup = ReplyKeyboardBuilder()
 
     # Levellarni klaviaturaga qo'shish

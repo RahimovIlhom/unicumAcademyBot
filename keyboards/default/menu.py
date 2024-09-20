@@ -1,11 +1,18 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
+from environs import Env
+
+env = Env()
+env.read_env()
 
 
-async def main_manu(lang: str = 'uz') -> ReplyKeyboardMarkup:
+async def main_menu(telegramId, lang: str = 'uz') -> ReplyKeyboardMarkup:
     menu = ReplyKeyboardMarkup(
         keyboard=[
             [
-                KeyboardButton(text="🧑‍💻 Test boshlash"),
+                KeyboardButton(
+                    text="🧑‍💻 Test boshlash",
+                    web_app=WebAppInfo(url=env.str('NGROK_URL').format(telegramId=telegramId))
+                ),
             ],
             [
                 KeyboardButton(text="ℹ️ Kurs haqida"),

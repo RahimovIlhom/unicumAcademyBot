@@ -11,7 +11,7 @@ from config import LEVELS
 from filters import PrivateFilter
 from loader import dp, db
 from states import Registration
-from keyboards.default import get_contact_markup, levels_markup, main_manu
+from keyboards.default import get_contact_markup, levels_markup, main_menu
 
 
 @dp.message(PrivateFilter(), CommandStart())
@@ -20,7 +20,7 @@ async def command_start(message: types.Message, state: FSMContext):
     if not user:
         await start_registration(message, state)
     else:
-        await message.answer("Bosh menyu", reply_markup=await main_manu(lang=user['language']))
+        await message.answer("Bosh menyu", reply_markup=await main_menu(telegramId=message.from_user.id))
         await state.clear()
 
 
@@ -70,7 +70,15 @@ async def get_phone(message: types.Message, state: FSMContext):
 # Ingliz tili darajasini qabul qilish va ma'lumotlarni saqlash
 @dp.message(Registration.level, lambda msg: msg.content_type == ContentType.TEXT and msg.text in LEVELS)
 async def get_level(message: types.Message, state: FSMContext):
-    await state.update_data(telegramId=message.from_user.id, selectedLevel=message.text)
+    levels_dict = {
+        '🟢 Beginner': 'beginner',
+        '🟡 Elementary': 'elementary',
+        '🔵 Pre-Intermediate': 'pre-intermediate',
+        '🟣 Intermediate': 'intermediate',
+        '🟠 Upper-Intermediate': 'upper-intermediate',
+        '🔴 Advanced': 'advanced'
+    }
+    await state.update_data(telegramId=message.from_user.id, selectedLevel=levels_dict[message.text])
     user_data = await state.get_data()
 
     # databasega saqlash
@@ -80,7 +88,7 @@ async def get_level(message: types.Message, state: FSMContext):
 
     # Testga taklif qilish
     await message.answer("✅ Siz muvaffaqiyatli ro'yxatdan o'tdingiz. Darajangizni tasdiqlash uchun test topshirishingiz kerak.\n"
-                         "'Test boshlash' tugmasini bosing.", reply_markup=await main_manu())
+                         "'Test boshlash' tugmasini bosing.", reply_markup=await main_menu(telegramId=message.from_user.id))
 
 
 @dp.message(StateFilter(Registration))
