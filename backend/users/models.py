@@ -32,3 +32,4 @@ class BotUser(models.Model):
 
     class Meta:
         db_table = 'bot_users'
+        ordering = ['-registeredAt']
