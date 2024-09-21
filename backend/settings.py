@@ -150,7 +150,7 @@ JAZZMIN_SETTINGS = {
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"app": "users"},
         {"app": "tests"},
-        {"name": "Export excel", "url": "http://127.0.0.1:8000/api/v1/users/export/excel/",},
+        {"name": "Export excel", "url": env.str('EXPORT_EXCEL_URL'),},
     ],
 
     #############

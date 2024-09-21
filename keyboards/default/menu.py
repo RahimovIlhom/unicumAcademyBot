@@ -11,7 +11,7 @@ async def main_menu(telegramId, lang: str = 'uz') -> ReplyKeyboardMarkup:
             [
                 KeyboardButton(
                     text="🧑‍💻 Test topshirish",
-                    web_app=WebAppInfo(url=env.str('NGROK_URL').format(telegramId=telegramId))
+                    web_app=WebAppInfo(url=env.str('WEB_APP_URL').format(telegramId=telegramId))
                 ),
             ],
             [
