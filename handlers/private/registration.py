@@ -16,7 +16,6 @@ from keyboards.default import get_contact_markup, main_menu
 @dp.message(PrivateFilter(), CommandStart())
 async def command_start(message: types.Message, state: FSMContext):
     user = await db.get_user(message.from_user.id)
-    print(user)
     if not user:
         await start_registration(message, state)
     else:

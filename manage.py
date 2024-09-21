@@ -2,6 +2,9 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from django.utils import timezone
+
+timezone.utc = timezone.utc if hasattr(timezone, 'utc') else None
 
 
 def main():
