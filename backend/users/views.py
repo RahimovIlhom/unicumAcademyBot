@@ -1,12 +1,18 @@
 import xlsxwriter
 from django.http import HttpResponse
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework.response import Response
 from .models import BotUser
+from .serializers import LevelsResponseSerializer
+from .utils.data import LEVELS_DICT, LEVELS_LIST
 
 
 class ExportUsersToExcel(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
 
     def get(self, request):
         # BotUser modelidagi barcha foydalanuvchilarni olish
@@ -47,3 +53,40 @@ class ExportUsersToExcel(APIView):
         # Workbookni yopish va javobni qaytarish
         workbook.close()
         return response
+
+
+@swagger_auto_schema(
+    method='get',  # 'method' orqali aniq metodni ko'rsatamiz
+    manual_parameters=[
+        openapi.Parameter('telegramId', openapi.IN_QUERY, description="Telegram ID of the user", type=openapi.TYPE_STRING),
+    ],
+    responses={
+        200: LevelsResponseSerializer(),
+        400: 'Telegram ID not found',
+        404: 'User not found',
+    }
+)
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_levels_for_telegram_user(request):
+    telegram_id = request.GET.get('telegramId')
+
+    if not telegram_id:
+        return Response({'message': 'Telegram ID not found'}, status=400)
+
+    user = BotUser.objects.filter(telegramId=telegram_id).first()
+
+    if not user:
+        return Response({'message': 'User not found'}, status=404)
+
+    recommended_level = user.recommendedLevel
+    selected_level = user.selectedLevel
+
+    if recommended_level and selected_level and LEVELS_DICT[recommended_level] >= LEVELS_DICT[selected_level]:
+        levels = LEVELS_LIST[LEVELS_DICT[recommended_level]:]
+    else:
+        levels = LEVELS_LIST[:LEVELS_DICT.get(recommended_level, len(LEVELS_LIST)) + 1]
+
+    return Response({'levels': levels}, status=200)
+
+

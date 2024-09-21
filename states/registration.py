@@ -5,4 +5,3 @@ class Registration(StatesGroup):
     name = State()
     contact = State()
     phone = State()
-    level = State()

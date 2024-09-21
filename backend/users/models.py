@@ -21,7 +21,7 @@ class BotUser(models.Model):
     telegramContact = models.CharField(max_length=20, blank=True, null=True)
     phoneNumber = models.CharField(max_length=20, blank=True, null=True)
     language = models.CharField(max_length=2, choices=LANGUAGES, default='uz')
-    selectedLevel = models.CharField(max_length=20, choices=LEVELS, default='beginner')
+    selectedLevel = models.CharField(max_length=20, choices=LEVELS, default=None, blank=True, null=True)
     confirmedLevel = models.CharField(max_length=20, choices=LEVELS, default=None, blank=True, null=True)
     recommendedLevel = models.CharField(max_length=20, choices=LEVELS, default=None, blank=True, null=True)
     registeredAt = models.DateTimeField(auto_now_add=True)
