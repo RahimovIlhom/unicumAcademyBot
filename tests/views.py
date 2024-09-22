@@ -128,9 +128,6 @@ def completed_test_session(request):
     if test_session.completed:
         return Response({'detail': 'Test session already completed'}, status=404)
 
-    test_session.completed = True
-    test_session.save()
-
     for user_response in user_responses:
         question_id = user_response.get('questionId')
         answer = user_response.get('answer')
@@ -143,6 +140,9 @@ def completed_test_session(request):
             correct=answer == 'a'
         )
         question_response.save()
+
+    test_session.completed = True
+    test_session.save()
 
     test_session.update_correct_answers()
 
