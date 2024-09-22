@@ -30,20 +30,20 @@ start_test_session_schema = openapi.Schema(
     responses={
         201: TestSessionResponseSerializer(),
         400: openapi.Response('Bad Request', openapi.Schema(type=openapi.TYPE_OBJECT, properties={'detail': openapi.Schema(type=openapi.TYPE_STRING)})),
-        404: 'Telegram ID not found',
+        404: openapi.Response('Not found', openapi.Schema(type=openapi.TYPE_OBJECT, properties={'detail': openapi.Schema(type=openapi.TYPE_STRING)})),
     }
 )
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def start_test_session(request):
     telegram_id = request.data.get('telegramId')
-    level = request.data.get('level')
+    level = request.data.get('level').lower()
 
     if not telegram_id:
-        return Response({'detail': 'Telegram ID not found'}, status=400)
+        return Response({'detail': 'Telegram ID is required'}, status=400)
 
     if not level:
-        return Response({'detail': 'Level not found'}, status=400)
+        return Response({'detail': 'Level is required'}, status=400)
     else:
         if level not in [level[0] for level in LEVELS]:
             return Response({'detail': 'Invalid level'}, status=400)
@@ -55,7 +55,7 @@ def start_test_session(request):
     questions = Question.objects.filter(level=level).order_by('?')[:20]
 
     if not questions:
-        return Response({'detail': 'No questions found'}, status=404)
+        return Response({'detail': 'There are no questions'}, status=404)
 
     test_session = TestSession.objects.create(user=user, level=level, totalQuestions=len(questions))
 
@@ -115,7 +115,7 @@ def start_test_session(request):
     responses={
         200: TestSessionSerializer(),
         400: openapi.Response('Bad Request', openapi.Schema(type=openapi.TYPE_OBJECT, properties={'detail': openapi.Schema(type=openapi.TYPE_STRING)})),
-        404: openapi.Response('Test session not found', openapi.Schema(type=openapi.TYPE_OBJECT, properties={'detail': openapi.Schema(type=openapi.TYPE_STRING)})),
+        404: openapi.Response('Not found', openapi.Schema(type=openapi.TYPE_OBJECT, properties={'detail': openapi.Schema(type=openapi.TYPE_STRING)})),
     }
 )
 @api_view(['POST'])
@@ -125,7 +125,7 @@ def completed_test_session(request):
     user_responses = request.data.get('userResponses')
 
     if not test_session_id:
-        return Response({'detail': 'Test session ID not found'}, status=400)
+        return Response({'detail': 'Test session ID is required'}, status=400)
 
     test_session = get_object_or_404(TestSession, id=test_session_id)
     if test_session.completed:

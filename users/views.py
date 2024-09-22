@@ -63,7 +63,7 @@ class ExportUsersToExcel(APIView):
     ],
     responses={
         200: LevelsResponseSerializer(),
-        400: 'Telegram ID not found',
+        400: 'Telegram ID is required.',
         404: 'No BotUser matches the given query.',
     }
 )
@@ -73,7 +73,7 @@ def get_levels_for_telegram_user(request):
     telegram_id = request.GET.get('telegramId')
 
     if not telegram_id:
-        return Response({'detail': 'Telegram ID not found'}, status=400)
+        return Response({'detail': 'Telegram ID is required.'}, status=400)
 
     user = get_object_or_404(BotUser, telegramId=telegram_id)
 
@@ -85,4 +85,10 @@ def get_levels_for_telegram_user(request):
     else:
         levels = LEVELS_LIST[:LEVELS_DICT.get(recommended_level, len(LEVELS_LIST)) + 1]
 
-    return Response({'levels': levels}, status=200)
+    levels_data = [
+        {
+            'label': level.title(),
+        } for level in levels
+    ]
+
+    return Response({'levels': levels_data}, status=200)
