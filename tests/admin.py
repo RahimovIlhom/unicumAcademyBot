@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Question, TestResult
+from .models import Question, QuestionResponse, TestSession
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -9,11 +9,14 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ('question', 'a', 'b', 'c', 'd')
 
 
-class TestResultAdmin(admin.ModelAdmin):
-    list_display = ('user', 'level', 'totalQuestions', 'correctAnswers', 'scorePercentage', 'resultScore', 'recommendedLevel', 'resultedAt')
+class TestSessionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'level', 'correctAnswers', 'createdAt')
     list_filter = ('level', )
-    search_fields = ('user__fullname', 'user__telegramContact', 'user__phoneNumber')
+    search_fields = ('user', 'level', 'correctAnswers')
 
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(TestResult, TestResultAdmin)
+
+admin.site.register(QuestionResponse)
+
+admin.site.register(TestSession)
