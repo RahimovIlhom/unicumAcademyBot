@@ -174,7 +174,8 @@ JAZZMIN_SETTINGS = {
         "users.BotUser": "fas fa-robot",          # Bot foydalanuvchisi uchun ikona
         "tests": "fas fa-question",
         "tests.Question": "fas fa-lightbulb",      # Savol uchun chiroyli belgi
-        "tests.TestResult": "fas fa-chart-bar",     # TestResult modeli uchun ikon
+        'tests.QuestionResponse': 'fas fa-reply',
+        'tests.TestSession': 'fas fa-clock',
     },
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
