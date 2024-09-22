@@ -54,6 +54,9 @@ def start_test_session(request):
 
     questions = Question.objects.filter(level=level).order_by('?')[:20]
 
+    if not questions:
+        return Response({'detail': 'No questions found'}, status=404)
+
     test_session = TestSession.objects.create(user=user, level=level, totalQuestions=len(questions))
 
     questions_data = [
