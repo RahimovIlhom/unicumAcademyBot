@@ -23,7 +23,7 @@ inflection==0.5.1
 magic-filter==1.0.12
 marshmallow==3.22.0
 multidict==6.1.0
-mysql-connector-python==9.0.0
+mysql-connector-python==8.0.33
 packaging==24.1
 pillow==10.4.0
 protobuf==3.20.1
