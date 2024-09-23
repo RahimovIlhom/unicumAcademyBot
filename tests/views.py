@@ -150,7 +150,7 @@ def completed_test_session(request):
             answer = user_response.get('answer')
 
             # Validate and fetch question
-            question = questions.get(question_id)
+            question = questions.pop(question_id, None)
             if not question:
                 # Collect missing question IDs
                 missing_questions.append(question_id)
