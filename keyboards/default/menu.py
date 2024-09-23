@@ -15,12 +15,11 @@ async def main_menu(telegramId, lang: str = 'uz') -> ReplyKeyboardMarkup:
                 ),
             ],
             [
-                KeyboardButton(text="ℹ️ Kurs haqida"),
                 KeyboardButton(text="📝 Ma'lumotlarim"),
+                KeyboardButton(text="📊 Statistika"),
             ],
             [
-                KeyboardButton(text="📊 Statistika"),
-                KeyboardButton(text="⚙️ Sozlamalar")
+                KeyboardButton(text="ℹ️ O'quv markaz haqida"),
             ]
         ],
         resize_keyboard=True, row_width=2
