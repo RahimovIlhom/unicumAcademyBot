@@ -16,6 +16,8 @@ class Question(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     isActive = models.BooleanField(default=True)
 
+    objects = models.Manager()
+
     def __str__(self):
         return f"(question: {self.pk}, level: {self.level})"
 
@@ -34,6 +36,8 @@ class QuestionResponse(models.Model):
     answer = models.CharField(max_length=1, null=True, blank=True)  # a, b, c, d
     correct = models.BooleanField(default=False)
 
+    objects = models.Manager()
+
     def __str__(self):
         return f"{self.user} - {self.question}"
 
@@ -50,6 +54,8 @@ class TestSession(models.Model):
     completed = models.BooleanField(default=False)
     createdAt = models.DateTimeField(auto_now_add=True)
     completedAt = models.DateTimeField(null=True, blank=True)
+
+    objects = models.Manager()
 
     def __str__(self):
         return f"{self.user} - {self.level} - {self.correctAnswers}"

@@ -10,7 +10,7 @@ class QuestionOptionSerializer(serializers.Serializer):
 
 
 class QuestionSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
+    questionId = serializers.IntegerField(read_only=True)
     question = serializers.CharField(read_only=True)
     image = serializers.CharField(allow_null=True)
     options = QuestionOptionSerializer(many=True)
@@ -27,3 +27,8 @@ class TestSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = TestSession
         fields = '__all__'
+
+
+class TestSessionResultSerializer(serializers.Serializer):
+    test_session = TestSessionSerializer()
+    missing_questions = serializers.ListField(child=serializers.IntegerField())
