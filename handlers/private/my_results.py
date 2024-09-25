@@ -16,7 +16,7 @@ async def my_results(message: Message):
     results = await db.get_my_results(message.from_user.id)
     if not results:
         await message.answer("Sizning hozirda natijangiz mavjud emas. Chunki siz test topshirmagansiz! "
-                             "Iltimos, darajangizni aniqlash uchun <<🧑‍💻 Test topshirish>> tugmasini bosing.")
+                             "\nIltimos, darajangizni aniqlash uchun \"🧑‍💻 Test topshirish\" tugmasini bosing.")
     else:
         await message.answer("Qaysi test natijangizni ko'rmoqchisiz?\nTanlang:", reply_markup=await my_results_markup(results))
 
