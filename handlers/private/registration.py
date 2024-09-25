@@ -1,6 +1,5 @@
 import asyncio
 import re
-from pyexpat.errors import messages
 
 from aiogram import types, F
 from aiogram.enums import ContentType
@@ -64,7 +63,7 @@ async def get_phone(message: types.Message, state: FSMContext):
     else:
         await state.update_data(phone=f"998{phone}")
 
-    await message.answer("Kursda o'qish uchun qulay vaqtni tanlang?", reply_markup=await preferred_time_slots())
+    await message.answer("Kursda o'qish uchun qulay vaqtni tanlang:", reply_markup=await preferred_time_slots())
     await state.set_state(Registration.preferred_time_slot)
 
 

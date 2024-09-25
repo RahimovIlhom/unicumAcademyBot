@@ -129,3 +129,27 @@ class Database:
             FROM bot_users 
         """
         return await self.fetchall(sql)
+
+    async def set_fullname(self, telegramId, fullname):
+        sql = """
+            UPDATE bot_users
+            SET fullname = %s
+            WHERE telegramId = %s
+        """
+        await self.execute(sql, fullname, telegramId)
+
+    async def set_phone_number(self, telegramId, phone):
+        sql = """
+            UPDATE bot_users
+            SET phoneNumber = %s
+            WHERE telegramId = %s
+        """
+        await self.execute(sql, phone, telegramId)
+
+    async def set_preferred_time_slot(self, telegramId, preferred_time):
+        sql = """
+            UPDATE bot_users
+            SET preferred_time_slot = %s
+            WHERE telegramId = %s
+        """
+        await self.execute(sql, preferred_time, telegramId)
