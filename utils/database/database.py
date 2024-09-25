@@ -73,13 +73,15 @@ class Database:
             self.pool.close()
             await self.pool.wait_closed()
 
-    async def add_user(self, telegramId, fullname: str, contact: str, phone: str, selectedLevel: str=None, *args, **kwargs):
+    async def add_user(self, telegramId, fullname: str, contact: str, phone: str, preferred_time_slot: int,
+                       selectedLevel: str=None, *args, **kwargs):
         sql = """
             INSERT INTO bot_users 
                 (telegramId,
                  fullname,
                  telegramContact,
                  phoneNumber,
+                 preferred_time_slot,
                  language,
                  selectedLevel,
                  confirmedLevel,
@@ -87,9 +89,9 @@ class Database:
                  registeredAt,
                  updatedAt)
             VALUES
-                (%s, %s, %s, %s, 'uz', %s, NULL, NULL, NOW(), NOW())
+                (%s, %s, %s, %s, %s, 'uz', %s, NULL, NULL, NOW(), NOW())
         """
-        await self.execute(sql, telegramId, fullname, contact, phone, selectedLevel)
+        await self.execute(sql, telegramId, fullname, contact, phone, preferred_time_slot, selectedLevel)
 
     async def get_user(self, telegramId) -> dict:
         sql = """
@@ -98,6 +100,7 @@ class Database:
                 fullname,
                 telegramContact,
                 phoneNumber,
+                preferred_time_slot,
                 language,
                 selectedLevel,
                 confirmedLevel,
@@ -116,6 +119,7 @@ class Database:
                 fullname,
                 telegramContact,
                 phoneNumber,
+                preferred_time_slot,
                 language,
                 selectedLevel,
                 confirmedLevel,

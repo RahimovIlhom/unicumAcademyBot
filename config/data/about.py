@@ -1,0 +1,8 @@
+ABOUT_TEXT = """
+<b>UNICUM ACADEMY — BE UNIQUE, THINK GLOBAL</b>
+
+Unicum Academy - Fan va texnologiyalar universitetida joylashgan zamonaviy ingliz tili o‘quv markazi. Biz yuqori sifatli ta’lim, qulaylik va innovatsion o‘qitish uslublarini o‘zida mujassam etgan noyob ta’lim muhitini yaratdik.\n
+Bevosita universitet binosida joylashganimiz tufayli talabalar uchun eng maqbul tanlovmiz. Sababi – endi yo‘lga vaqt sarflashingiz shart emas, ingliz tilini samarali o‘rganish uchun zarur bo‘lgan barcha sharoitlar shu yerda mavjud. Shu bilan birga, biz moslashuvchan dars jadvalini taklif etamiz: kunduzgi ta’lim shaklida tahsil oluvchi talabalar kechki kurslarga, kechki ta’lim shaklida tahsil oluvchi talabalar esa ertalabki yoki kunduzgi kurslarga qatnashishlari mumkin. Ya’ni har bir kishi o‘zi uchun qulay vaqtni tanlash imkoniyatiga ega.\n
+Yuqori malakali murabbiylar va individual yondashuv muvaffaqiyatimizning poydevoridir. Murabbiylarimizning IELTS darajasi kamida 7 ballni tashkil etadi. Asosiy murabbiy bilan o‘tkazilgan mashg‘ulotdan so‘ng assistentlar har bir o‘quvchi bilan individual tarzda ishlab, ularni qo‘llab-quvvatlaydilar. Biz o‘qitishning zamonaviy va interaktiv usullarini, jumladan o‘yin shaklidagi mashg‘ulotlar va chet elliklar ishtirokida so’zlashuv amaliyotlarini aktiv qo‘llaymiz.\n
+Dars jarayonlari xalqaro Oksford universiteti tomonidan ishlab chiqilgan dastur asosida olib boriladi, bu esa ta’limning yuqori sifati va o‘quvchi uchun tez rivojlanish imkoniyatini kafolatlaydi. Oksford dasturi bo‘yicha barcha o‘quv materiallari bepul taqdim etiladi. Biz til o‘rganish jarayonini nafaqat samarali, balki qiziqarli qilishga intilamiz.
+"""

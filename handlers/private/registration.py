@@ -1,16 +1,18 @@
 import asyncio
 import re
+from pyexpat.errors import messages
 
-from aiogram import types
+from aiogram import types, F
 from aiogram.enums import ContentType
 from aiogram.filters import StateFilter, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
+from config.data import PREFERRED_TIME_SLOTS
 from filters import PrivateFilter
 from loader import dp, db
 from states import Registration
-from keyboards.default import get_contact_markup, main_menu
+from keyboards.default import get_contact_markup, main_menu, preferred_time_slots
 
 
 @dp.message(PrivateFilter(), CommandStart())
@@ -61,6 +63,14 @@ async def get_phone(message: types.Message, state: FSMContext):
         await state.update_data(phone=phone)
     else:
         await state.update_data(phone=f"998{phone}")
+
+    await message.answer("Kursda o'qish uchun qulay vaqtni tanlang?", reply_markup=await preferred_time_slots())
+    await state.set_state(Registration.preferred_time_slot)
+
+
+@dp.message(Registration.preferred_time_slot, lambda msg: msg.content_type == ContentType.TEXT and msg.text in PREFERRED_TIME_SLOTS.keys())
+async def get_preferred_time_slot(message: types.Message, state: FSMContext):
+    await state.update_data(preferred_time_slot=PREFERRED_TIME_SLOTS[message.text])
     user_data = await state.get_data()
 
     # databasega saqlash
