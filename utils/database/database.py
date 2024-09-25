@@ -1,5 +1,3 @@
-import asyncio
-
 import aiomysql
 
 from environs import Env

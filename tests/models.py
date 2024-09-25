@@ -19,7 +19,7 @@ class Question(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"(question: {self.pk}, level: {self.level})"
+        return f"{self.level} - qID: {self.pk}"
 
     def delete(self, using=None, keep_parents=False):
         self.isActive = False
@@ -39,7 +39,7 @@ class QuestionResponse(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.user} - {self.question}"
+        return f"{self.user} - {self.question}, answer: {self.answer}"
 
     class Meta:
         db_table = 'question_responses'
@@ -64,7 +64,7 @@ class TestSession(models.Model):
     active_objects = ActiveTestSessionManager()
 
     def __str__(self):
-        return f"{self.user} - {self.level} - {self.correctAnswers}"
+        return f"{self.user} - {self.level}"
 
     class Meta:
         db_table = 'test_sessions'
