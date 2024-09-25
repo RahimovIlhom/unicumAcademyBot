@@ -16,7 +16,7 @@ async def main_menu(telegramId, lang: str = 'uz') -> ReplyKeyboardMarkup:
             ],
             [
                 KeyboardButton(text="📝 Ma'lumotlarim"),
-                KeyboardButton(text="📊 Statistika"),
+                KeyboardButton(text="📊 Mening natijam"),
             ],
             [
                 KeyboardButton(text="ℹ️ O'quv markaz haqida"),

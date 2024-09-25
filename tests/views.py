@@ -67,7 +67,7 @@ def start_test_session(request):
         return Response({'detail': 'There are no questions for this level'}, status=404)
 
     # Create test session
-    test_session = TestSession.objects.create(user=user, level=level, totalQuestions=len(questions))
+    test_session, created = TestSession.active_objects.get_or_create(user=user, level=level, totalQuestions=len(questions))
 
     # Prepare the response data
     questions_data = [

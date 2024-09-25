@@ -46,6 +46,11 @@ class QuestionResponse(models.Model):
         ordering = ['-id']
 
 
+class ActiveTestSessionManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(completed=False)
+
+
 class TestSession(models.Model):
     user = models.ForeignKey(BotUser, on_delete=models.CASCADE)
     level = models.CharField(max_length=20, choices=LEVELS)
@@ -56,6 +61,7 @@ class TestSession(models.Model):
     completedAt = models.DateTimeField(null=True, blank=True)
 
     objects = models.Manager()
+    active_objects = ActiveTestSessionManager()
 
     def __str__(self):
         return f"{self.user} - {self.level} - {self.correctAnswers}"
