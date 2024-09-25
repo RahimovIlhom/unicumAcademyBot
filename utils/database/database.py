@@ -110,7 +110,7 @@ class Database:
         """
         return await self.fetchone(sql, telegramId)
 
-    async def get_users(self):
+    async def get_users(self) -> list[dict]:
         sql = """
             SELECT 
                 telegramId,
@@ -128,7 +128,7 @@ class Database:
         """
         return await self.fetchall(sql)
 
-    async def set_fullname(self, telegramId, fullname):
+    async def set_fullname(self, telegramId, fullname) -> None:
         sql = """
             UPDATE bot_users
             SET fullname = %s
@@ -136,7 +136,7 @@ class Database:
         """
         await self.execute(sql, fullname, telegramId)
 
-    async def set_phone_number(self, telegramId, phone):
+    async def set_phone_number(self, telegramId, phone) -> None:
         sql = """
             UPDATE bot_users
             SET phoneNumber = %s
@@ -144,10 +144,43 @@ class Database:
         """
         await self.execute(sql, phone, telegramId)
 
-    async def set_preferred_time_slot(self, telegramId, preferred_time):
+    async def set_preferred_time_slot(self, telegramId, preferred_time) -> None:
         sql = """
             UPDATE bot_users
             SET preferred_time_slot = %s
             WHERE telegramId = %s
         """
         await self.execute(sql, preferred_time, telegramId)
+
+    async def get_my_results(self, telegramId) -> list[dict]:
+        sql = """
+            SELECT
+                id,
+                user_id,
+                level,
+                totalQuestions,
+                correctAnswers,
+                completed,
+                createdAt,
+                completedAt
+            FROM test_sessions
+            WHERE user_id = %s AND completed = TRUE
+            ORDER BY completedAt DESC;
+        """
+        return await self.fetchall(sql, telegramId)
+
+    async def get_result_by_session_id(self, session_id: int) -> dict:
+        sql = """
+            SELECT
+                id,
+                user_id,
+                level,
+                totalQuestions,
+                correctAnswers,
+                completed,
+                createdAt,
+                completedAt
+            FROM test_sessions
+            WHERE id = %s;
+        """
+        return await self.fetchone(sql, session_id)
