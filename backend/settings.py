@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     # global apps
     'drf_yasg',
     'rest_framework',
+    'corsheaders',
 
     # local apps
     'users.apps.UsersConfig',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -52,6 +54,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -98,14 +102,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # }
 
 DATABASES = {
-	'default': {
-		'ENGINE': 'mysql.connector.django',
-		'NAME': env.str('DB_NAME'),
-		'USER': env.str('DB_USER'),
-		'PASSWORD': env.str('DB_PASSWORD'),
-		'HOST':env.str('DB_HOST'),
-		'PORT':env.str('DB_PORT'),
-	}
+    'default': {
+        'ENGINE': "django.db.backends.mysql",
+        'NAME': env.str('DB_NAME'),
+        'USER': env.str('DB_USER'),
+        'PASSWORD': env.str('DB_PASSWORD'),
+        'HOST': env.str('DB_HOST'),
+        'PORT': env.str('DB_PORT')
+    }
 }
 
 # Password validation
@@ -146,7 +150,7 @@ JAZZMIN_SETTINGS = {
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"app": "users"},
         {"app": "tests"},
-        {"name": "Export excel", "url": "http://127.0.0.1:8000/api/v1/users/export/excel/",},
+        {"name": "Export excel", "url": env.str('EXPORT_EXCEL_URL'),},
     ],
 
     #############
@@ -166,7 +170,8 @@ JAZZMIN_SETTINGS = {
         "users.BotUser": "fas fa-robot",          # Bot foydalanuvchisi uchun ikona
         "tests": "fas fa-question",
         "tests.Question": "fas fa-lightbulb",      # Savol uchun chiroyli belgi
-        "tests.TestResult": "fas fa-chart-bar",     # TestResult modeli uchun ikon
+        'tests.QuestionResponse': 'fas fa-reply',
+        'tests.TestSession': 'fas fa-clock',
     },
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
@@ -254,3 +259,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/admin/login/'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 7200,  # Kesh 2 soat davomida saqlanadi, keyin tozalanadi
+    }
+}

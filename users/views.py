@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
@@ -62,8 +63,8 @@ class ExportUsersToExcel(APIView):
     ],
     responses={
         200: LevelsResponseSerializer(),
-        400: 'Telegram ID not found',
-        404: 'User not found',
+        400: 'Telegram ID is required.',
+        404: 'No BotUser matches the given query.',
     }
 )
 @api_view(['GET'])
@@ -72,21 +73,25 @@ def get_levels_for_telegram_user(request):
     telegram_id = request.GET.get('telegramId')
 
     if not telegram_id:
-        return Response({'message': 'Telegram ID not found'}, status=400)
+        return Response({'detail': 'Telegram ID is required.'}, status=400)
 
-    user = BotUser.objects.filter(telegramId=telegram_id).first()
-
-    if not user:
-        return Response({'message': 'User not found'}, status=404)
+    user = get_object_or_404(BotUser, telegramId=telegram_id)
 
     recommended_level = user.recommendedLevel
     selected_level = user.selectedLevel
 
-    if recommended_level and selected_level and LEVELS_DICT[recommended_level] >= LEVELS_DICT[selected_level]:
+    if recommended_level and selected_level and LEVELS_DICT[recommended_level] > LEVELS_DICT[selected_level]:
         levels = LEVELS_LIST[LEVELS_DICT[recommended_level]:]
     else:
-        levels = LEVELS_LIST[:LEVELS_DICT.get(recommended_level, len(LEVELS_LIST)) + 1]
+        if recommended_level == 'beginner':
+            levels = LEVELS_LIST[1:2]
+        else:
+            levels = LEVELS_LIST[1:LEVELS_DICT.get(recommended_level, len(LEVELS_LIST)) + 1]
 
-    return Response({'levels': levels}, status=200)
+    levels_data = [
+        {
+            'label': level.title(),
+        } for level in levels
+    ]
 
-
+    return Response({'levels': levels_data}, status=200)

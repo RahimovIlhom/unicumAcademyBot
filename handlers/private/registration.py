@@ -1,22 +1,22 @@
 import asyncio
 import re
 
-from aiogram import types
+from aiogram import types, F
 from aiogram.enums import ContentType
 from aiogram.filters import StateFilter, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
+from config.data import PREFERRED_TIME_SLOTS
 from filters import PrivateFilter
 from loader import dp, db
 from states import Registration
-from keyboards.default import get_contact_markup, main_menu
+from keyboards.default import get_contact_markup, main_menu, preferred_time_slots
 
 
 @dp.message(PrivateFilter(), CommandStart())
 async def command_start(message: types.Message, state: FSMContext):
     user = await db.get_user(message.from_user.id)
-    print(user)
     if not user:
         await start_registration(message, state)
     else:
@@ -25,8 +25,9 @@ async def command_start(message: types.Message, state: FSMContext):
 
 
 async def start_registration(message: types.Message, state: FSMContext):
-    await message.answer("Assalomu alaykum, Unicum Academy Botiga xush kelibsiz!\n"
-                         "Ingliz tili kursiga ro'yxatdan o'tish uchun ism-familiyangizni kiriting:")
+    await message.answer("Assalomu alaykum! Unicum Academy o’quv markazining rasmiy botiga "
+                         "xush kelibsiz. Ingliz tili kursiga ro'yxatdan o'tish uchun "
+                         "ism va familiyangizni kiriting:", reply_markup=ReplyKeyboardRemove())
     await state.set_state(Registration.name)
 
 
@@ -43,7 +44,7 @@ async def get_name(message: types.Message, state: FSMContext):
 @dp.message(Registration.contact, lambda msg: msg.content_type==ContentType.CONTACT)
 async def get_contact(message: types.Message, state: FSMContext):
     await state.update_data(contact=message.contact.phone_number.replace('+', ''))
-    await message.answer("Qo'shimcha telefon raqamingizni kiriting:\n"
+    await message.answer("Siz bilan bog’lanishimiz uchun qo'shimcha telefon raqamini kiriting:\n"
                          "Masalan: +998901234567", reply_markup=ReplyKeyboardRemove())
     await state.set_state(Registration.phone)
 
@@ -62,6 +63,14 @@ async def get_phone(message: types.Message, state: FSMContext):
         await state.update_data(phone=phone)
     else:
         await state.update_data(phone=f"998{phone}")
+
+    await message.answer("Kursda o'qish uchun qulay vaqtni tanlang:", reply_markup=await preferred_time_slots())
+    await state.set_state(Registration.preferred_time_slot)
+
+
+@dp.message(Registration.preferred_time_slot, lambda msg: msg.content_type == ContentType.TEXT and msg.text in PREFERRED_TIME_SLOTS.keys())
+async def get_preferred_time_slot(message: types.Message, state: FSMContext):
+    await state.update_data(preferred_time_slot=PREFERRED_TIME_SLOTS[message.text])
     user_data = await state.get_data()
 
     # databasega saqlash
@@ -78,5 +87,5 @@ async def get_phone(message: types.Message, state: FSMContext):
 async def error_message(message: types.Message):
     await message.delete()
     er_msg = await message.answer("⚠️ <b>Xato ma'lumot!</b>\nIltimos, ko'rsatmalarga amal qilgan holda kerakli ma'lumotni to'g'ri formatda kiriting.")
-    await asyncio.sleep(3)
+    await asyncio.sleep(5)
     await er_msg.delete()

@@ -12,6 +12,6 @@ LEVELS_LIST = [
     'elementary',
     'pre-intermediate',
     'intermediate',
-    'upper-intermediat',
+    'upper-intermediate',
     'advanced',
 ]

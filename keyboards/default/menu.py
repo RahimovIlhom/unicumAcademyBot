@@ -11,16 +11,15 @@ async def main_menu(telegramId, lang: str = 'uz') -> ReplyKeyboardMarkup:
             [
                 KeyboardButton(
                     text="🧑‍💻 Test topshirish",
-                    web_app=WebAppInfo(url=env.str('NGROK_URL').format(telegramId=telegramId))
+                    web_app=WebAppInfo(url=env.str('WEB_APP_URL').format(telegramId=telegramId))
                 ),
             ],
             [
-                KeyboardButton(text="ℹ️ Kurs haqida"),
                 KeyboardButton(text="📝 Ma'lumotlarim"),
+                KeyboardButton(text="📊 Mening natijam"),
             ],
             [
-                KeyboardButton(text="📊 Statistika"),
-                KeyboardButton(text="⚙️ Sozlamalar")
+                KeyboardButton(text="ℹ️ O'quv markaz haqida"),
             ]
         ],
         resize_keyboard=True, row_width=2
