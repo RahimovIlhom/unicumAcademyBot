@@ -37,27 +37,17 @@ class Database:
                 await conn.commit()
 
     async def fetchone(self, query: str, *args) -> dict | None:
-        """
-        Execute: SELECT one value
-        :param query: sql query
-        :param args: values
-        :return: dict
-        """
         async with self.pool.acquire() as conn:
             async with conn.cursor(aiomysql.DictCursor) as cur:
+                await conn.ping(reconnect=True)  # Aloqani yangilash uchun
                 await cur.execute(query, args)
                 result = await cur.fetchone()
                 return result
 
     async def fetchall(self, query: str, *args) -> list[dict]:
-        """
-        Execute: SELECT many value
-        :param query: sql query
-        :param args: values
-        :return: list[dict]
-        """
         async with self.pool.acquire() as conn:
             async with conn.cursor(aiomysql.DictCursor) as cur:
+                await conn.ping(reconnect=True)  # Aloqani yangilash uchun
                 await cur.execute(query, args)
                 result = await cur.fetchall()
                 return result
