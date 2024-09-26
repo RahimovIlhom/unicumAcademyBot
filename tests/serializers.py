@@ -30,5 +30,5 @@ class TestSessionSerializer(serializers.ModelSerializer):
 
 
 class TestSessionResultSerializer(serializers.Serializer):
-    test_session = TestSessionSerializer()
-    missing_questions = serializers.ListField(child=serializers.IntegerField())
+    testSession = TestSessionSerializer()
+    missingQuestions = serializers.ListField(child=serializers.IntegerField())

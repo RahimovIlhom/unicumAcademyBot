@@ -182,8 +182,8 @@ def completed_test_session(request):
 
     # Include missing question IDs in the response if any
     response_data = {
-        'test_session': resp.data,
-        'missing_questions': missing_questions
+        'testSession': resp.data,
+        'missingQuestions': missing_questions
     }
 
     return Response(response_data, status=200)
