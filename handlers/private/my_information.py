@@ -35,17 +35,17 @@ async def my_information(message: Message):
         if user['confirmedLevel'] else None
     )
     recommended_level = LEVELS_OBJ[user['recommendedLevel']] if user['recommendedLevel'] else None
-    recommended_text = '🎯 <b>Test yechish uchun tavsiya etilgan daraja:</b> ' + recommended_level + '\n' if recommended_level else ''
+    recommended_text = '🎯 <b>Tavsiya etilgan daraja:</b> ' + recommended_level + '\n' if recommended_level and user['recommendedLevel'] != user['confirmedLevel'] else ''
 
     # Asosiy foydalanuvchi ma'lumotlarini formatlash
     user_info = (
         f"📝 <b>Sizning ma'lumotlaringiz:</b>\n\n"
         f"👤 <b>Ism-familiya:</b> {user['fullname']}\n"
-        f"📱 <b>Telegram kontakt:</b> +{user['telegramContact']}\n"
-        f"📞 <b>Qo'shimcha telefon raqam:</b> +{user['phoneNumber']}\n"
-        f"🕒 <b>Kursda o'qish uchun qulay vaqt oralig'i:</b> {PREFERRED_TIME_SLOTS_DICT.get(user['preferred_time_slot'], 'Xatolik')}\n"
+        f"📱 <b>Telegram kontakt:</b> {user['telegramContact'][3:]}\n"
+        f"📞 <b>Qo'shimcha raqam:</b> {user['phoneNumber'][3:]}\n"
         f"⭐ <b>Daraja:</b> {confirmed_level or selected_level}\n"
         f"{recommended_text}"
+        f"🕒 <b>Kurs uchun qulay vaqt:</b> {PREFERRED_TIME_SLOTS_DICT.get(user['preferred_time_slot'], 'Xatolik')}\n"
         f"🗓️ <b>Ro'yxatdan o'tilgan sana:</b> {registered_at}"
     )
 

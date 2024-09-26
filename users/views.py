@@ -80,10 +80,13 @@ def get_levels_for_telegram_user(request):
     recommended_level = user.recommendedLevel
     selected_level = user.selectedLevel
 
-    if recommended_level and selected_level and LEVELS_DICT[recommended_level] >= LEVELS_DICT[selected_level]:
+    if recommended_level and selected_level and LEVELS_DICT[recommended_level] > LEVELS_DICT[selected_level]:
         levels = LEVELS_LIST[LEVELS_DICT[recommended_level]:]
     else:
-        levels = LEVELS_LIST[:LEVELS_DICT.get(recommended_level, len(LEVELS_LIST)) + 1]
+        if recommended_level == 'beginner':
+            levels = LEVELS_LIST[1:2]
+        else:
+            levels = LEVELS_LIST[1:LEVELS_DICT.get(recommended_level, len(LEVELS_LIST)) + 1]
 
     levels_data = [
         {

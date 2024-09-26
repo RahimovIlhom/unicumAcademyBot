@@ -55,10 +55,6 @@ def start_test_session(request):
     # Fetch user
     user = get_object_or_404(BotUser, telegramId=telegram_id)
 
-    # Update user's selected level
-    user.selectedLevel = level
-    user.save()
-
     # Retrieve random questions based on level (optimized)
     questions = Question.objects.filter(level=level).order_by(Random())[:20]
 
@@ -194,6 +190,8 @@ async def recommending_level_to_user(user: BotUser, test_session: TestSession):
     correctAnswers = test_session.correctAnswers
 
     result_percentage = (correctAnswers / totalQuestions) * 100
+
+    user.selectedLevel = test_session.level
 
     if result_percentage >= 90:
         user.confirmedLevel = test_session.level

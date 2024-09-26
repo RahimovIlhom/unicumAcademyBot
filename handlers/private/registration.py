@@ -25,8 +25,9 @@ async def command_start(message: types.Message, state: FSMContext):
 
 
 async def start_registration(message: types.Message, state: FSMContext):
-    await message.answer("Assalomu alaykum, Unicum Academy Botiga xush kelibsiz!\n"
-                         "Ingliz tili kursiga ro'yxatdan o'tish uchun ism-familiyangizni kiriting:")
+    await message.answer("Assalomu alaykum! Unicum Academy o’quv markazining rasmiy botiga "
+                         "xush kelibsiz. Ingliz tili kursiga ro'yxatdan o'tish uchun "
+                         "ism va familiyangizni kiriting:", reply_markup=ReplyKeyboardRemove())
     await state.set_state(Registration.name)
 
 
@@ -43,7 +44,7 @@ async def get_name(message: types.Message, state: FSMContext):
 @dp.message(Registration.contact, lambda msg: msg.content_type==ContentType.CONTACT)
 async def get_contact(message: types.Message, state: FSMContext):
     await state.update_data(contact=message.contact.phone_number.replace('+', ''))
-    await message.answer("Qo'shimcha telefon raqamingizni kiriting:\n"
+    await message.answer("Siz bilan bog’lanishimiz uchun qo'shimcha telefon raqamini kiriting:\n"
                          "Masalan: +998901234567", reply_markup=ReplyKeyboardRemove())
     await state.set_state(Registration.phone)
 
@@ -86,5 +87,5 @@ async def get_preferred_time_slot(message: types.Message, state: FSMContext):
 async def error_message(message: types.Message):
     await message.delete()
     er_msg = await message.answer("⚠️ <b>Xato ma'lumot!</b>\nIltimos, ko'rsatmalarga amal qilgan holda kerakli ma'lumotni to'g'ri formatda kiriting.")
-    await asyncio.sleep(3)
+    await asyncio.sleep(5)
     await er_msg.delete()
