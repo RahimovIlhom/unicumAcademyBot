@@ -3,6 +3,7 @@ from datetime import datetime
 from aiogram import F
 from aiogram.filters import StateFilter
 from aiogram.types import Message, CallbackQuery
+from pytz import timezone
 
 from config.data import LEVELS_OBJ
 from filters import PrivateFilter
@@ -46,8 +47,9 @@ async def show_my_result(call, test_session_id):
         return
 
     # Sanalarni formatlash
-    created_at = result['createdAt'].strftime('%H:%M %d/%m/%Y') if isinstance(result['createdAt'], datetime) else 'Nomaʼlum'
-    completed_at = result['completedAt'].strftime('%H:%M %d/%m/%Y') if isinstance(result['completedAt'], datetime) else 'Nomaʼlum'
+    tashkent_tz = timezone('Asia/Tashkent')
+    created_at = result['createdAt'].astimezone(tashkent_tz).strftime('%H:%M %d/%m/%Y') if isinstance(result['createdAt'], datetime) else 'Nomaʼlum'
+    completed_at = result['completedAt'].astimezone(tashkent_tz).strftime('%H:%M %d/%m/%Y') if isinstance(result['completedAt'], datetime) else 'Nomaʼlum'
 
     # Chiroyli tarzda natijalarni formatlash
     result_text = (

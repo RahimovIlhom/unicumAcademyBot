@@ -6,6 +6,7 @@ from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram import F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
+from pytz import timezone
 
 from config.data import LEVELS_OBJ
 from config.data.time_slots import PREFERRED_TIME_SLOTS_DICT, PREFERRED_TIME_SLOTS
@@ -23,7 +24,8 @@ async def my_information(message: Message):
         return
 
     # Sana formatini o'zgartirish
-    registered_at = user['registeredAt'].strftime('%H:%M %d/%m/%Y')
+    tashkent_tz = timezone('Asia/Tashkent')
+    registered_at = user['registeredAt'].astimezone(tashkent_tz).strftime('%H:%M %d/%m/%Y')
 
     # Darajalarni aniqlash
     selected_level = (
