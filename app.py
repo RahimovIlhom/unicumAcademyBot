@@ -16,6 +16,7 @@ async def main():
     """
     Main bot runner. This will start the bot and handle setup.
     """
+    await bot.delete_webhook()
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     dp.startup.register(on_startup)
     dp.shutdown.register(close_database)
