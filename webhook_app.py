@@ -46,7 +46,8 @@ def main() -> None:
 
     setup_application(app, dp, bot=bot)
 
-    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    # context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    context = ssl.create_default_context()
     context.load_cert_chain(WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV)
 
     web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT, ssl_context=context)
