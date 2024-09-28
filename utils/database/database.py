@@ -62,7 +62,7 @@ class Database:
             await self.pool.wait_closed()
 
     async def add_user(self, telegramId, fullname: str, contact: str, phone: str, preferred_time_slot: int,
-                       selectedLevel: str=None, *args, **kwargs):
+                       selectedLevel: str = None, *args, **kwargs):
         sql = """
             INSERT INTO bot_users 
                 (telegramId,
@@ -77,7 +77,7 @@ class Database:
                  registeredAt,
                  updatedAt)
             VALUES
-                (%s, %s, %s, %s, %s, 'uz', %s, NULL, NULL, NOW(), NOW())
+                (%s, %s, %s, %s, %s, 'uz', %s, NULL, NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP())
         """
         await self.execute(sql, telegramId, fullname, contact, phone, preferred_time_slot, selectedLevel)
 
@@ -121,7 +121,8 @@ class Database:
     async def set_fullname(self, telegramId, fullname) -> None:
         sql = """
             UPDATE bot_users
-            SET fullname = %s
+            SET fullname = %s,
+                updatedAt = UTC_TIMESTAMP()
             WHERE telegramId = %s
         """
         await self.execute(sql, fullname, telegramId)
@@ -129,7 +130,8 @@ class Database:
     async def set_phone_number(self, telegramId, phone) -> None:
         sql = """
             UPDATE bot_users
-            SET phoneNumber = %s
+            SET phoneNumber = %s,
+                updatedAt = UTC_TIMESTAMP()
             WHERE telegramId = %s
         """
         await self.execute(sql, phone, telegramId)
@@ -137,7 +139,8 @@ class Database:
     async def set_preferred_time_slot(self, telegramId, preferred_time) -> None:
         sql = """
             UPDATE bot_users
-            SET preferred_time_slot = %s
+            SET preferred_time_slot = %s,
+                updatedAt = UTC_TIMESTAMP()
             WHERE telegramId = %s
         """
         await self.execute(sql, preferred_time, telegramId)
