@@ -85,6 +85,8 @@ def get_levels_for_telegram_user(request):
     else:
         if recommended_level == 'beginner':
             levels = LEVELS_LIST[1:2]
+        elif recommended_level == 'advanced':
+            levels = LEVELS_LIST[5:6]
         else:
             levels = LEVELS_LIST[1:LEVELS_DICT.get(recommended_level, len(LEVELS_LIST)) + 1]
 
