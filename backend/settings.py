@@ -133,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 JAZZMIN_SETTINGS = {
     "site_title": "Unicum Academy Admin",
     "site_header": "Unicum Academy Bot",
-    "site_brand": "Unicum Academy",
+    "site_brand": "Unicum academy",
     "site_logo": "img/UNICUM.png",
     "login_logo": "img/UNICUM3.png",
     "login_logo_dark": None,
@@ -141,16 +141,28 @@ JAZZMIN_SETTINGS = {
     "site_icon": "img/UNICUM.png",
     "welcome_sign": "Welcome to Unicum Academy Bot Admin Panel",
     "copyright": "Unicum Academy Ltd",
-    "search_model": ["users.BotUser"],
+    # "search_model": ["users.BotUser"],
 
     ############
     # Top Menu #
     ############
     "topmenu_links": [
-        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-        {"app": "users"},
-        {"app": "tests"},
-        {"name": "Export excel", "url": env.str('EXPORT_EXCEL_URL'),},
+        {
+            "name": "Excel (Last day)",
+            "url": env.str('EXPORT_EXCEL_URL') + '?period=last_day'
+        },
+        {
+            "name": "Excel (Last week)",
+            "url": env.str('EXPORT_EXCEL_URL') + '?period=last_week'
+        },
+        {
+            "name": "Excel (Last month)",
+            "url": env.str('EXPORT_EXCEL_URL') + '?period=last_month'
+        },
+        # {
+        #     "name": "Excel (All time)",
+        #     "url": env.str('EXPORT_EXCEL_URL') + '?period=all'
+        # },
     ],
 
     #############
@@ -202,32 +214,31 @@ JAZZMIN_UI_TWEAKS = {
     "footer_small_text": False,
     "body_small_text": False,
     "brand_small_text": False,
-    "brand_colour": False,
+    "brand_colour": "navbar-success",
     "accent": "accent-navy",
-    "navbar": "navbar-warning navbar-light",
-    "no_navbar_border": False,
+    "navbar": "navbar-success navbar-dark",
+    "no_navbar_border": True,
     "navbar_fixed": True,
     "layout_boxed": False,
     "footer_fixed": False,
     "sidebar_fixed": True,
-    "sidebar": "sidebar-dark-warning",
+    "sidebar": "sidebar-dark-success",
     "sidebar_nav_small_text": False,
     "sidebar_disable_expand": False,
     "sidebar_nav_child_indent": False,
     "sidebar_nav_compact_style": False,
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False,
-    "theme": "sandstone",
+    "theme": "journal",
     "dark_mode_theme": None,
     "button_classes": {
         "primary": "btn-outline-primary",
         "secondary": "btn-outline-secondary",
-        "info": "btn-info",
-        "warning": "btn-warning",
-        "danger": "btn-danger",
-        "success": "btn-success"
-    },
-    "actions_sticky_top": False
+        "info": "btn-outline-info",
+        "warning": "btn-outline-warning",
+        "danger": "btn-outline-danger",
+        "success": "btn-outline-success"
+    }
 }
 
 # Internationalization
