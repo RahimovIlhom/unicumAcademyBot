@@ -17,7 +17,7 @@ class ExportUsersToExcel(APIView):
 
     def get(self, request):
         # BotUser modelidagi barcha foydalanuvchilarni olish
-        bot_users = BotUser.objects.all()
+        bot_users = BotUser.objects.all().order_by('-registeredAt')
 
         # Javobni HttpResponse orqali Excel formatida qaytarish
         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
