@@ -1,7 +1,7 @@
 import asyncio
 import re
 
-from aiogram import types, F
+from aiogram import types
 from aiogram.enums import ContentType
 from aiogram.filters import StateFilter, CommandStart
 from aiogram.fsm.context import FSMContext
@@ -53,10 +53,16 @@ async def get_contact(message: types.Message, state: FSMContext):
 @dp.message(Registration.phone,
             lambda msg: msg.content_type == ContentType.TEXT and re.match(r"^\+?[(]?(998)?[)]?[-\s\.]?([0-9]{2})[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{2}[-\s\.]?[0-9]{2}$", msg.text))
 async def get_phone(message: types.Message, state: FSMContext):
+    data = await state.get_data()
     phone = message.text
 
     # Telefon raqamni barcha bo'shliqlar, nuqtalar, qavslar va tirelardan tozalash
     phone = re.sub(r"[\+\-\(\)\s\.]", "", phone)
+
+    if phone in data.get('contact'):
+        await message.answer("Qo'shimcha telefon raqami telegram kontaktingiz bilan bir xil bo'lmasligi kerak.\n"
+                             "Iltimos, qaytadan kiriting:", reply_markup=ReplyKeyboardRemove())
+        return
 
     # Telefon raqamni yangilangan holda 998XXXXXXX formatida saqlash
     if phone.startswith("998"):
