@@ -5,6 +5,11 @@ from users.models import LEVELS
 from users.models import BotUser
 
 
+class ActiveQuestionManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(isActive=True)
+
+
 class Question(models.Model):
     level = models.CharField(max_length=20, choices=LEVELS)
     image = models.ImageField(blank=True, null=True, upload_to='questions/images/')
@@ -16,6 +21,7 @@ class Question(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     isActive = models.BooleanField(default=True)
 
+    active_objects = ActiveQuestionManager()
     objects = models.Manager()
 
     def __str__(self):

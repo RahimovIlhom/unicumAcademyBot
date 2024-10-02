@@ -7,6 +7,7 @@ class QuestionAdmin(admin.ModelAdmin):
     list_display = ('id', 'level', 'question', 'a', 'createdAt')
     list_filter = ('level', )
     search_fields = ('question', 'a', 'b', 'c', 'd')
+    exclude = ('isActive', )
 
 
 class TestSessionAdmin(admin.ModelAdmin):

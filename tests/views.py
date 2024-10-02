@@ -56,7 +56,7 @@ def start_test_session(request):
     user = get_object_or_404(BotUser, telegramId=telegram_id)
 
     # Retrieve random questions based on level (optimized)
-    questions = Question.objects.filter(level=level).order_by(Random())[:20]
+    questions = Question.active_objects.filter(level=level).order_by(Random())[:20]
 
     # Ensure there are enough questions
     if not questions.exists():
