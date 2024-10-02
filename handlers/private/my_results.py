@@ -14,6 +14,8 @@ from loader import dp, db
 
 @dp.message(StateFilter(None), PrivateFilter(), F.text == '📊 Mening natijam')
 async def my_results(message: Message):
+    await message.answer("⚠️ Hozirda ushbu funksiya mavjud emas!")
+    return
     results = await db.get_my_results(message.from_user.id)
     if not results:
         await message.answer("Sizning hozirda natijangiz mavjud emas. Chunki siz test topshirmagansiz! "

@@ -1,3 +1,5 @@
+from users.utils.data import LEVELS_LIST
+
 LEVELS = (
     '🟢 Beginner',
     '🟡 Elementary',
@@ -14,4 +16,13 @@ LEVELS_OBJ = {
     'intermediate': '🟣 Intermediate',
     'upper-intermediate': '🟠 Upper-Intermediate',
     'advanced': '🔴 Advanced'
+}
+
+LEVELS_KEYS = {
+    '🟢 Beginner': 'beginner',
+    '🟡 Elementary': 'elementary',
+    '🔵 Pre-Intermediate': 'pre-intermediate',
+    '🟣 Intermediate': 'intermediate',
+    '🟠 Upper-Intermediate': 'upper-intermediate',
+    '🔴 Advanced': 'advanced'
 }

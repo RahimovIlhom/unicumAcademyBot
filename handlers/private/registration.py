@@ -7,11 +7,12 @@ from aiogram.filters import StateFilter, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
-from config.data import PREFERRED_TIME_SLOTS
+from config import LEVELS
+from config.data import PREFERRED_TIME_SLOTS, LEVELS_KEYS
 from filters import PrivateFilter
 from loader import dp, db
 from states import Registration
-from keyboards.default import get_contact_markup, main_menu, preferred_time_slots
+from keyboards.default import get_contact_markup, main_menu, preferred_time_slots, levels_markup
 
 
 @dp.message(PrivateFilter(), CommandStart())
@@ -64,6 +65,14 @@ async def get_phone(message: types.Message, state: FSMContext):
     else:
         await state.update_data(phone=f"998{phone}")
 
+    await message.answer("Ingliz tilini bilish darajangizni tanlang:", reply_markup=await levels_markup())
+    await state.set_state(Registration.level)
+
+
+@dp.message(Registration.level, lambda msg: msg.content_type == ContentType.TEXT and msg.text in LEVELS)
+async def get_level(message: types.Message, state: FSMContext):
+    await state.update_data(selectedLevel=LEVELS_KEYS[message.text])
+
     await message.answer("Kursda o'qish uchun qulay vaqtni tanlang:", reply_markup=await preferred_time_slots())
     await state.set_state(Registration.preferred_time_slot)
 
@@ -79,8 +88,7 @@ async def get_preferred_time_slot(message: types.Message, state: FSMContext):
     await state.clear()
 
     # Testga taklif qilish
-    await message.answer("✅ Siz muvaffaqiyatli ro'yxatdan o'tdingiz. Darajangizni aniqlash uchun test topshirishingiz kerak.\n"
-                         "🧑‍💻 <b>Test topshirish</b> tugmasini bosing.", reply_markup=await main_menu(telegramId=message.from_user.id))
+    await message.answer("✅ Siz muvaffaqiyatli ro'yxatdan o'tdingiz.", reply_markup=await main_menu(telegramId=message.from_user.id))
 
 
 @dp.message(StateFilter(Registration))
