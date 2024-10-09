@@ -61,8 +61,7 @@ class Database:
             self.pool.close()
             await self.pool.wait_closed()
 
-    async def add_user(self, telegramId, fullname: str, contact: str, phone: str, preferred_time_slot: int,
-                       selectedLevel: str = None, *args, **kwargs):
+    async def add_draft_user(self, telegramId, fullname: str, contact: str, phone: str, *args, **kwargs):
         sql = """
             INSERT INTO bot_users 
                 (telegramId,
@@ -74,12 +73,26 @@ class Database:
                  selectedLevel,
                  confirmedLevel,
                  recommendedLevel,
+                 status,
                  registeredAt,
                  updatedAt)
             VALUES
-                (%s, %s, %s, %s, %s, 'uz', %s, NULL, NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP())
+                (%s, %s, %s, %s, NULL, 'uz', NULL, NULL, NULL, 'draft', UTC_TIMESTAMP(), UTC_TIMESTAMP())
         """
-        await self.execute(sql, telegramId, fullname, contact, phone, preferred_time_slot, selectedLevel)
+        await self.execute(sql, telegramId, fullname, contact, phone)
+
+    async def complete_registration(self, telegramId, preferred_time_slot: int, selectedLevel: str = None, *args, **kwargs):
+        sql = """
+                UPDATE 
+                    bot_users
+                SET 
+                    preferred_time_slot = %s,
+                    selectedLevel = %s,
+                    status = 'registered',
+                    updatedAt = UTC_TIMESTAMP()
+                WHERE telegramId = %s
+            """
+        await self.execute(sql, preferred_time_slot, selectedLevel, telegramId)
 
     async def get_user(self, telegramId) -> dict:
         sql = """
@@ -93,6 +106,7 @@ class Database:
                 selectedLevel,
                 confirmedLevel,
                 recommendedLevel,
+                status,
                 registeredAt,
                 updatedAt 
             FROM bot_users 

@@ -21,6 +21,16 @@ async def command_start(message: types.Message, state: FSMContext):
     if not user:
         await start_registration(message, state)
     else:
+        if user.get('status') == 'draft':
+            await message.answer(
+                "Iltimos, ingliz tilini bilish darajangizni tanlang. "
+                "Bu tanlov o‘quv jarayoningizni yanada samarali qilishga yordam beradi. "
+                "Quyidagi tugmalardan birini tanlang:",
+                reply_markup=await levels_markup()
+            )
+            await state.set_state(Registration.level)
+            await state.update_data(telegramId=message.from_user.id)
+            return
         await message.answer("Bosh menyu", reply_markup=await main_menu(telegramId=message.from_user.id))
         await state.clear()
 
@@ -71,7 +81,16 @@ async def get_phone(message: types.Message, state: FSMContext):
     else:
         await state.update_data(phone=f"998{phone}")
 
-    await message.answer("Ingliz tilini bilish darajangizni tanlang:", reply_markup=await levels_markup())
+    # databasega saqlash
+    data.update(phone=phone)
+    await db.add_draft_user(**data)
+
+    await message.answer(
+        "Iltimos, ingliz tilini bilish darajangizni tanlang. "
+        "Bu tanlov o‘quv jarayoningizni yanada samarali qilishga yordam beradi. "
+        "Quyidagi tugmalardan birini tanlang:",
+        reply_markup=await levels_markup()
+    )
     await state.set_state(Registration.level)
 
 
@@ -79,7 +98,10 @@ async def get_phone(message: types.Message, state: FSMContext):
 async def get_level(message: types.Message, state: FSMContext):
     await state.update_data(selectedLevel=LEVELS_KEYS[message.text])
 
-    await message.answer("Kursda o'qish uchun qulay vaqtni tanlang:", reply_markup=await preferred_time_slots())
+    await message.answer(
+        "Kursda o'qish uchun qulay vaqtni tanlang. Quyidagi tugmalardan birini tanlab, o'z jadvalingizni belgilab oling:",
+        reply_markup=await preferred_time_slots()
+    )
     await state.set_state(Registration.preferred_time_slot)
 
 
@@ -89,7 +111,7 @@ async def get_preferred_time_slot(message: types.Message, state: FSMContext):
     user_data = await state.get_data()
 
     # databasega saqlash
-    await db.add_user(**user_data)
+    await db.complete_registration(**user_data)
     # state ni tozalash
     await state.clear()
 
