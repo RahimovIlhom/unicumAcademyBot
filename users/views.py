@@ -46,13 +46,20 @@ class ExportUsersToExcel(APIView):
 
         # Vaqt oralig'iga qarab filter yaratish
         if period == 'last_day':
-            time_filter = Q(registeredAt__gte=current_time - timedelta(days=1))
+            start_time = current_time - timedelta(days=1)
+            time_filter = Q(registeredAt__gte=start_time)
+            filename_period = start_time.strftime('%d-%m-%Y') + '_to_' + current_time.strftime('%d-%m-%Y')
         elif period == 'last_week':
-            time_filter = Q(registeredAt__gte=current_time - timedelta(weeks=1))
+            start_time = current_time - timedelta(weeks=1)
+            time_filter = Q(registeredAt__gte=start_time)
+            filename_period = start_time.strftime('%d-%m-%Y') + '_to_' + current_time.strftime('%d-%m-%Y')
         elif period == 'last_month':
-            time_filter = Q(registeredAt__gte=current_time - timedelta(days=30))
+            start_time = current_time - timedelta(days=30)
+            time_filter = Q(registeredAt__gte=start_time)
+            filename_period = start_time.strftime('%d-%m-%Y') + '_to_' + current_time.strftime('%d-%m-%Y')
         elif period == 'all':
             time_filter = Q()  # Hech qanday filter qo'llanmaydi (barcha foydalanuvchilarni olish)
+            filename_period = 'all_time'
         else:
             return Response({'detail': 'Iltimos, oraliqni tanlang.'}, status=400)
 
@@ -63,7 +70,7 @@ class ExportUsersToExcel(APIView):
         response = HttpResponse(
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
-        response['Content-Disposition'] = f'attachment; filename=bot_users_{period}.xlsx'
+        response['Content-Disposition'] = f'attachment; filename=lids_{filename_period}.xlsx'
 
         # XlsxWriter bilan yangi workbook yaratish
         workbook = xlsxwriter.Workbook(response, {'in_memory': True})
