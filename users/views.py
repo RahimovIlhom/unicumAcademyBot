@@ -81,7 +81,7 @@ class ExportUsersToExcel(APIView):
             {'bold': True, 'align': 'center', 'valign': 'vcenter', 'bg_color': '#D7E4BC', 'border': 1})
         cell_format = workbook.add_format({'border': 1, 'align': 'center', 'valign': 'vcenter'})
         date_format = workbook.add_format(
-            {'num_format': 'yyyy-mm-dd hh:mm:ss', 'border': 1, 'align': 'center', 'valign': 'vcenter'})
+            {'num_format': 'dd-mm-yyyy hh:mm:ss', 'border': 1, 'align': 'center', 'valign': 'vcenter'})
 
         # Ustunlar uchun sarlavhalar
         headers = [
