@@ -58,6 +58,8 @@ class BotUser(models.Model):
     registeredAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
+    objects = models.Manager()
+
     def __str__(self):
         return f"{self.fullname}"
 
@@ -84,6 +86,27 @@ EDUCATION_TYPES = (
     ('evening', 'Evening'),
     ('externally', 'Externally')
 )
+
+EDUCATION_DIRECTIONS = [
+    ('software_engineering', 'Software Engineering'),  # Dasturiy injiniring
+    ('computer_engineering', 'Computer Engineering'),  # Kompyuter injiniringi
+    ('banking', 'Banking'),  # Bank ishi
+    ('finance_and_financial_technologies', 'Finance and Financial Technologies'),  # Moliya va moliyaviy texnologiyalar
+    ('logistics', 'Logistics'),  # Logistika
+    ('economics', 'Economics'),  # Iqtisodiyot
+    ('accounting', 'Accounting'),  # Buxgalteriya hisobi
+    ('tourism_and_hospitality', 'Tourism and Hospitality'),  # Turizm va mehmondo’stlik
+    ('preschool_education', 'Preschool Education'),  # Maktabgacha taʼlim
+    ('primary_education', 'Primary Education'),  # Boshlangʻich taʼlim
+    ('special_pedagogy', 'Special Pedagogy'),  # Maxsus pedagogika
+    ('native_language_and_literature', 'Native Language and Literature'),  # Ona tili va adabiyot
+    ('foreign_language_and_literature', 'Foreign Language and Literature'),  # Xorijiy til va adabiyoti
+    ('history', 'History'),  # Tarix
+    ('mathematics', 'Mathematics'),  # Matematika
+    ('psychology', 'Psychology'),  # Psixologiya
+    ('architecture', 'Architecture'),  # Arxitektura
+    ('social_work', 'Social Work'),  # Ijtimoiy ish
+]
 
 ENGLISH_LEVELS = (
     ('none', 'No knowledge'),
@@ -171,10 +194,10 @@ class Survey(models.Model):
     age = models.IntegerField(blank=True, null=True)
     gender = models.CharField(max_length=10, choices=GENDERS, blank=True, null=True)
     courseNumber = models.IntegerField(choices=COURSE_NUMBERS, blank=True, null=True)
-    educationType = models.CharField(max_length=255, choices=EDUCATION_TYPES, blank=True, null=True)
-    educationDirection = models.CharField(max_length=255, blank=True, null=True)
+    educationType = models.CharField(max_length=20, choices=EDUCATION_TYPES, blank=True, null=True)
+    educationDirection = models.CharField(max_length=50, choices=EDUCATION_DIRECTIONS, blank=True, null=True)
     englishLevel = models.CharField(max_length=20, choices=ENGLISH_LEVELS, blank=True, null=True)
-    englishGoal = models.CharField(max_length=50, choices=GOALS, blank=True, null=True)
+    englishGoal = models.CharField(max_length=20, choices=GOALS, blank=True, null=True)
     daysPerWeek = models.PositiveIntegerField(choices=DAYS_PER_WEEK_CHOICES, blank=True, null=True)
     learningExperience = models.CharField(max_length=20, choices=LEARNING_EXPERIENCE_CHOICES, blank=True, null=True)
     obstacles = MultiSelectField(choices=OBSTACLE_CHOICES, blank=True, null=True)
@@ -223,6 +246,8 @@ class Survey(models.Model):
         null=True,
         help_text="Would you like to attend the free open lesson?"
     )
+
+    objects = models.Manager()
 
     def __str__(self):
         return self.user.fullname

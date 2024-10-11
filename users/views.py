@@ -11,8 +11,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
-from .models import BotUser, PREFERRED_TIME_SLOTS, LANGUAGES, LEVELS
-from .serializers import LevelsResponseSerializer
+from .models import BotUser, PREFERRED_TIME_SLOTS, LANGUAGES, LEVELS, Survey
+from .serializers import LevelsResponseSerializer, SurveyCreateSerializer, SurveyRetrieveSerializer
 from .utils.data import LEVELS_DICT, LEVELS_LIST
 
 
@@ -169,3 +169,46 @@ def get_levels_for_telegram_user(request):
     ]
 
     return Response({'levels': levels_data}, status=200)
+
+
+class SurveyCreateView(APIView):
+    permission_classes = [AllowAny]
+    serializer_class = SurveyCreateSerializer
+
+    @swagger_auto_schema(
+        request_body=SurveyCreateSerializer,
+        responses={
+            201: SurveyCreateSerializer(),
+            400: 'Invalid data.',
+            404: "No BotUser matches the given query.",
+        },
+    )
+    def post(self, request, *args, **kwargs):
+        user_id = request.data.get('user')
+        bot_user = get_object_or_404(BotUser, telegramId=user_id)
+        serializer = self.serializer_class(data=request.data)
+        if not serializer.is_valid():
+            print(serializer.errors)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        bot_user.status = 'registered'
+        bot_user.registeredType = 'survey'
+        bot_user.save()
+        return Response(serializer.data)
+
+
+class SurveyRetrieveView(APIView):
+    permission_classes = [AllowAny]
+    serializer_class = SurveyRetrieveSerializer
+
+    @swagger_auto_schema(
+        responses={
+            200: SurveyRetrieveSerializer(),
+            404: "No BotUser matches the given query.",
+        },
+    )
+    def get(self, request, userId, *args, **kwargs):
+        bot_user = get_object_or_404(BotUser, telegramId=userId)
+        survey = Survey.objects.filter(user=bot_user).order_by('-id').first()
+        serializer = self.serializer_class(survey)
+        return Response(serializer.data)
