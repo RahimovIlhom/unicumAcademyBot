@@ -180,6 +180,7 @@ JAZZMIN_SETTINGS = {
         "auth.Group": "fas fa-users",
         "users": "fas fa-user-friends",
         "users.BotUser": "fas fa-robot",          # Bot foydalanuvchisi uchun ikona
+        "users.Survey": "fas fa-poll-h",
         "tests": "fas fa-question",
         "tests.Question": "fas fa-lightbulb",      # Savol uchun chiroyli belgi
         'tests.QuestionResponse': 'fas fa-reply',

@@ -90,6 +90,7 @@ class Database:
                     preferred_time_slot = %s,
                     selectedLevel = %s,
                     status = 'registered',
+                    registeredType = 'registration',
                     updatedAt = UTC_TIMESTAMP()
                 WHERE telegramId = %s
             """

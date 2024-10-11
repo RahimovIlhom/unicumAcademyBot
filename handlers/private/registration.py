@@ -7,11 +7,12 @@ from aiogram.filters import StateFilter, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
-from config.data import PREFERRED_TIME_SLOTS
+from config import LEVELS
+from config.data import PREFERRED_TIME_SLOTS, LEVELS_KEYS
 from filters import PrivateFilter
 from loader import dp, db
 from states import Registration
-from keyboards.default import get_contact_markup, main_menu, preferred_time_slots
+from keyboards.default import get_contact_markup, main_menu, preferred_time_slots, levels_markup, registered_types
 
 
 @dp.message(PrivateFilter(), CommandStart())
@@ -22,10 +23,10 @@ async def command_start(message: types.Message, state: FSMContext):
     else:
         if user.get('status') == 'draft':
             await message.answer(
-                "Kursda o'qish uchun qulay vaqtni tanlang. Quyidagi tugmalardan birini tanlab, o'z jadvalingizni belgilab oling:",
-                reply_markup=await preferred_time_slots()
+                f"Hurmatli {user.get('fullname')}! Unicum Academy'da ingliz tili kurslariga yozilmoqchimisiz yoki so'rovnomada ishtirok etmoqchimisiz?",
+                reply_markup=await registered_types()
             )
-            await state.set_state(Registration.preferred_time_slot)
+            await state.set_state(Registration.registered_type)
             await state.update_data(telegramId=message.from_user.id)
             return
         await message.answer("Bosh menyu", reply_markup=await main_menu(telegramId=message.from_user.id))
@@ -78,9 +79,31 @@ async def get_phone(message: types.Message, state: FSMContext):
     else:
         await state.update_data(phone=f"998{phone}")
 
-    # databasega saqlash
-    data.update(phone=phone)
+    data = await state.get_data()
     await db.add_draft_user(**data)
+
+    await message.answer(
+        f"Hurmatli {data.get('fullname')}! Unicum Academy'da ingliz tili kurslariga yozilmoqchimisiz yoki so'rovnomada ishtirok etmoqchimisiz?",
+        reply_markup=await registered_types()
+    )
+    await state.set_state(Registration.registered_type)
+
+
+@dp.message(Registration.registered_type, lambda msg: msg.content_type == ContentType.TEXT and msg.text == "📝 Ro'yxatdan o'tish")
+async def get_registered_type(message: types.Message, state: FSMContext):
+    await state.update_data(registeredType="registration")
+    await message.answer(
+        "Iltimos, ingliz tilini bilish darajangizni tanlang. "
+        "Bu tanlov o‘quv jarayoningizni yanada samarali qilishga yordam beradi. "
+        "Quyidagi tugmalardan birini tanlang:",
+        reply_markup=await levels_markup()
+    )
+    await state.set_state(Registration.level)
+
+
+@dp.message(Registration.level, lambda msg: msg.content_type == ContentType.TEXT and msg.text in LEVELS)
+async def get_level(message: types.Message, state: FSMContext):
+    await state.update_data(selectedLevel=LEVELS_KEYS[message.text])
 
     await message.answer(
         "Kursda o'qish uchun qulay vaqtni tanlang. Quyidagi tugmalardan birini tanlab, o'z jadvalingizni belgilab oling:",
@@ -100,8 +123,7 @@ async def get_preferred_time_slot(message: types.Message, state: FSMContext):
     await state.clear()
 
     # Testga taklif qilish
-    await message.answer("✅ Siz muvaffaqiyatli ro'yxatdan o'tdingiz. Darajangizni aniqlash uchun test topshirishingiz kerak.\n"
-                         "🧑‍💻 <b>Test topshirish</b> tugmasini bosing.", reply_markup=await main_menu(telegramId=message.from_user.id))
+    await message.answer("✅ Siz muvaffaqiyatli ro'yxatdan o'tdingiz.", reply_markup=await main_menu(telegramId=message.from_user.id))
 
 
 @dp.message(StateFilter(Registration))

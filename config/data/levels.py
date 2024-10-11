@@ -15,3 +15,12 @@ LEVELS_OBJ = {
     'upper-intermediate': '🟠 Upper-Intermediate',
     'advanced': '🔴 Advanced'
 }
+
+LEVELS_KEYS = {
+    '🟢 Beginner': 'beginner',
+    '🟡 Elementary': 'elementary',
+    '🔵 Pre-Intermediate': 'pre-intermediate',
+    '🟣 Intermediate': 'intermediate',
+    '🟠 Upper-Intermediate': 'upper-intermediate',
+    '🔴 Advanced': 'advanced'
+}
