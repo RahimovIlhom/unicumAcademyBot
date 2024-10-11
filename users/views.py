@@ -1,5 +1,9 @@
+import asyncio
+import json
+from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
+import aiohttp
 import xlsxwriter
 from django.db.models import Q
 from django.http import HttpResponse
@@ -11,6 +15,9 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
+
+from config import BOT_TOKEN
+from keyboards.default import main_menu
 from .models import BotUser, PREFERRED_TIME_SLOTS, LANGUAGES, LEVELS, Survey
 from .serializers import LevelsResponseSerializer, SurveyCreateSerializer, SurveyRetrieveSerializer
 from .utils.data import LEVELS_DICT, LEVELS_LIST
@@ -186,15 +193,54 @@ class SurveyCreateView(APIView):
     def post(self, request, *args, **kwargs):
         user_id = request.data.get('user')
         bot_user = get_object_or_404(BotUser, telegramId=user_id)
+
+        # Serializerdan foydalanish
         serializer = self.serializer_class(data=request.data)
-        if not serializer.is_valid():
-            print(serializer.errors)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+
+        # BotUser statusini yangilash
         bot_user.status = 'registered'
         bot_user.registeredType = 'survey'
         bot_user.save()
+
+        # Xabar yuborish orqa fonda
+        self.run_in_background(send_message, user_id)
+
+        # API response
         return Response(serializer.data)
+
+    def run_in_background(self, func, *args):
+        def wrapper():
+            try:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                loop.run_until_complete(func(*args))
+            except Exception as e:
+                pass
+            finally:
+                loop.close()
+
+        # ThreadPoolExecutor yordamida yangi ipda vazifani bajarish
+        executor = ThreadPoolExecutor(max_workers=3)
+        executor.submit(wrapper)
+
+
+async def send_message(chat_id):
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+
+    reply_markup = await main_menu(chat_id)
+
+    payload = {
+        'chat_id': chat_id,
+        'text': "Bosh menu",
+        'parse_mode': 'HTML',
+        'reply_markup': reply_markup.dict(include=None, exclude_none=True),
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            return response.status
 
 
 class SurveyRetrieveView(APIView):

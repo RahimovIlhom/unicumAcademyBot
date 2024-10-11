@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="echo function change">
+    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="survey create and get">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keyboards/default/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/default/menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,12 +101,21 @@
       <option name="project" value="LOCAL" />
       <updated>1728681739951</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="survey create and get">
+      <option name="closed" value="true" />
+      <created>1728685479577</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1728685479577</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Survey models and update registrations" />
     <MESSAGE value="echo function change" />
-    <option name="LAST_COMMIT_MESSAGE" value="echo function change" />
+    <MESSAGE value="survey create and get" />
+    <option name="LAST_COMMIT_MESSAGE" value="survey create and get" />
   </component>
 </project>
