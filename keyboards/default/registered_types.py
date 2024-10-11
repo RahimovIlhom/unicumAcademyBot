@@ -1,4 +1,8 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
+from environs import Env
+
+env = Env()
+env.read_env()
 
 
 async def registered_types(lang: str = 'uz') -> ReplyKeyboardMarkup:
@@ -7,7 +11,7 @@ async def registered_types(lang: str = 'uz') -> ReplyKeyboardMarkup:
             [
                 KeyboardButton(
                     text="📋 So'rovnomada ishtirok etish",
-                    web_app=WebAppInfo(url="https://unicalm.uz/quiz")
+                    web_app=WebAppInfo(url=env.str('SURVEY_URL'))
                 )
             ],
             [

@@ -48,7 +48,7 @@ async def my_information(message: Message):
         f"📞 <b>Qo'shimcha raqam:</b> {user['phoneNumber'][3:]}\n"
         f"⭐ <b>Daraja:</b> {confirmed_level or selected_level}\n"
         f"{recommended_text}"
-        f"🕒 <b>Kurs uchun qulay vaqt:</b> {PREFERRED_TIME_SLOTS_DICT.get(user['preferred_time_slot'], 'Xatolik')}\n"
+        f"🕒 <b>Kurs uchun qulay vaqt:</b> {PREFERRED_TIME_SLOTS_DICT.get(user['preferred_time_slot'], 'Mavjud emas')}\n"
         f"🗓️ <b>Ro'yxatdan o'tilgan sana:</b> {registered_at}"
     )
 

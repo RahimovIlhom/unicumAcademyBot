@@ -4,26 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/unicum-bot.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/data/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/data/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/data/levels.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/data/levels.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/private/my_results.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/private/my_results.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/private/registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/private/registration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboards/default/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/default/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboards/default/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/default/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/states/registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/states/registration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/database/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/database/database.py" afterDir="false" />
+    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="Survey models and update registrations">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/private/echo.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/private/echo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/private/my_information.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/private/my_information.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keyboards/default/registered_types.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/default/registered_types.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +86,19 @@
       <option name="presentableId" value="Default" />
       <updated>1728674055769</updated>
     </task>
+    <task id="LOCAL-00001" summary="Survey models and update registrations">
+      <option name="closed" value="true" />
+      <created>1728680974888</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1728680974888</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Survey models and update registrations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Survey models and update registrations" />
   </component>
 </project>
