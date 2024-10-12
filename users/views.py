@@ -1,5 +1,4 @@
 import asyncio
-import json
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
@@ -16,8 +15,9 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 
-from config import BOT_TOKEN
-from keyboards.default import main_menu
+from config import BOT_TOKEN, BOT_ID
+from keyboards.default import main_menu, free_lesson_participation
+from loader import dp
 from .models import BotUser, PREFERRED_TIME_SLOTS, LANGUAGES, LEVELS, Survey
 from .serializers import LevelsResponseSerializer, SurveyCreateSerializer, SurveyRetrieveSerializer
 from .utils.data import LEVELS_DICT, LEVELS_LIST
@@ -204,8 +204,8 @@ class SurveyCreateView(APIView):
         bot_user.registeredType = 'survey'
         bot_user.save()
 
-        # Xabar yuborish orqa fonda
-        self.run_in_background(send_message, user_id)
+        # Xabar yuborish va holatni orqa fonda yangilash
+        self.run_in_background(send_message, bot_user.telegramId, serializer.data.get('considerEnrollment'))
 
         # API response
         return Response(serializer.data)
@@ -222,21 +222,31 @@ class SurveyCreateView(APIView):
                 loop.close()
 
         # ThreadPoolExecutor yordamida yangi ipda vazifani bajarish
-        executor = ThreadPoolExecutor(max_workers=3)
+        executor = ThreadPoolExecutor(max_workers=1)
         executor.submit(wrapper)
 
 
-async def send_message(chat_id):
+async def send_message(user_id, considerEnrollment):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
-    reply_markup = await main_menu(chat_id)
+    if considerEnrollment == 'yes':
+        reply_markup = await free_lesson_participation()
 
-    payload = {
-        'chat_id': chat_id,
-        'text': "Bosh menu",
-        'parse_mode': 'HTML',
-        'reply_markup': reply_markup.dict(include=None, exclude_none=True),
-    }
+        payload = {
+            'chat_id': user_id,
+            'text': "So'rovnomada ishtirok etganingiz uchun rahmat! O'quv markazimizga qiziqish bildiribsiz, sizni bepul ochiq darsimizga yozib qo'ysam bo'ladimi?",
+            'parse_mode': 'HTML',
+            'reply_markup': reply_markup.dict(include=None, exclude_none=True),
+        }
+    else:
+        reply_markup = await main_menu(user_id)
+
+        payload = {
+            'chat_id': user_id,
+            'text': "Bosh menu",
+            'parse_mode': 'HTML',
+            'reply_markup': reply_markup.dict(include=None, exclude_none=True),
+        }
 
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=payload) as response:

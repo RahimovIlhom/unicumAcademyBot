@@ -5,13 +5,13 @@ env = Env()
 env.read_env()
 
 
-async def registered_types(lang: str = 'uz') -> ReplyKeyboardMarkup:
-    contact_markup = ReplyKeyboardMarkup(
+async def registered_types(telegramId, lang: str = 'uz') -> ReplyKeyboardMarkup:
+    markup = ReplyKeyboardMarkup(
         keyboard=[
             [
                 KeyboardButton(
                     text="📋 So'rovnomada ishtirok etish",
-                    web_app=WebAppInfo(url=env.str('SURVEY_URL'))
+                    web_app=WebAppInfo(url=env.str('SURVEY_URL').format(telegramId=telegramId))
                 )
             ],
             [
@@ -22,4 +22,4 @@ async def registered_types(lang: str = 'uz') -> ReplyKeyboardMarkup:
         one_time_keyboard=True,
     )
 
-    return contact_markup
+    return markup

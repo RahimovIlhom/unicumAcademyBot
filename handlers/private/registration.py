@@ -5,6 +5,7 @@ from aiogram import types
 from aiogram.enums import ContentType
 from aiogram.filters import StateFilter, CommandStart
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State
 from aiogram.types import ReplyKeyboardRemove
 
 from config import LEVELS
@@ -24,10 +25,9 @@ async def command_start(message: types.Message, state: FSMContext):
         if user.get('status') == 'draft':
             await message.answer(
                 f"Hurmatli {user.get('fullname')}! Unicum Academy'da ingliz tili kurslariga yozilmoqchimisiz yoki so'rovnomada ishtirok etmoqchimisiz?",
-                reply_markup=await registered_types()
+                reply_markup=await registered_types(message.from_user.id)
             )
-            await state.set_state(Registration.registered_type)
-            await state.update_data(telegramId=message.from_user.id)
+            await state.clear()
             return
         await message.answer("Bosh menyu", reply_markup=await main_menu(telegramId=message.from_user.id))
         await state.clear()
@@ -84,14 +84,13 @@ async def get_phone(message: types.Message, state: FSMContext):
 
     await message.answer(
         f"Hurmatli {data.get('fullname')}! Unicum Academy'da ingliz tili kurslariga yozilmoqchimisiz yoki so'rovnomada ishtirok etmoqchimisiz?",
-        reply_markup=await registered_types()
+        reply_markup=await registered_types(message.from_user.id)
     )
-    await state.set_state(Registration.registered_type)
+    await state.clear()
 
 
-@dp.message(Registration.registered_type, lambda msg: msg.content_type == ContentType.TEXT and msg.text == "📝 Ro'yxatdan o'tish")
+@dp.message(State(None), lambda msg: msg.content_type == ContentType.TEXT and msg.text == "📝 Ro'yxatdan o'tish")
 async def get_registered_type(message: types.Message, state: FSMContext):
-    await state.update_data(registeredType="registration")
     await message.answer(
         "Iltimos, ingliz tilini bilish darajangizni tanlang. "
         "Bu tanlov o‘quv jarayoningizni yanada samarali qilishga yordam beradi. "
@@ -114,7 +113,7 @@ async def get_level(message: types.Message, state: FSMContext):
 
 @dp.message(Registration.preferred_time_slot, lambda msg: msg.content_type == ContentType.TEXT and msg.text in PREFERRED_TIME_SLOTS.keys())
 async def get_preferred_time_slot(message: types.Message, state: FSMContext):
-    await state.update_data(preferred_time_slot=PREFERRED_TIME_SLOTS[message.text])
+    await state.update_data(preferred_time_slot=PREFERRED_TIME_SLOTS[message.text], telegramId=message.from_user.id)
     user_data = await state.get_data()
 
     # databasega saqlash
