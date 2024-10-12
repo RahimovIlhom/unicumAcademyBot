@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="export surveys to excel">
-      <change beforePath="$PROJECT_DIR$/handlers/private/free_lesson_participant.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/private/free_lesson_participant.py" afterDir="false" />
+    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="survey create and get">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keyboards/default/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/default/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,21 +24,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "RahimovIlhom"
-  }
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
 }]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/RahimovIlhom/unicumAcademyBot.git",
-    "accountId": "91069b8f-2051-43bb-a8a6-fa5e85fbf46f"
-  }
-}]]></component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
-}</component>
   <component name="ProjectId" id="2nIwmNubEveWgobaDuWgyiSoDLJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -47,10 +37,7 @@
   "keyToString": {
     "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.codeium.enabled": "true",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "master",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "git-widget-placeholder": "master"
   }
 }]]></component>
   <component name="RunManager">
@@ -122,48 +109,13 @@
       <option name="project" value="LOCAL" />
       <updated>1728685479577</updated>
     </task>
-    <task id="LOCAL-00004" summary="so'rovnomadan o'tish">
-      <option name="closed" value="true" />
-      <created>1728725685271</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1728725685271</updated>
-    </task>
-    <task id="LOCAL-00005" summary="so'rovnomadan o'tish full">
-      <option name="closed" value="true" />
-      <created>1728728541317</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1728728541317</updated>
-    </task>
-    <task id="LOCAL-00006" summary="so'rovnomadan o'tish full">
-      <option name="closed" value="true" />
-      <created>1728729467495</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1728729467495</updated>
-    </task>
-    <task id="LOCAL-00007" summary="export surveys to excel">
-      <option name="closed" value="true" />
-      <created>1728739940042</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1728739940042</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Survey models and update registrations" />
     <MESSAGE value="echo function change" />
     <MESSAGE value="survey create and get" />
-    <MESSAGE value="so'rovnomadan o'tish" />
-    <MESSAGE value="so'rovnomadan o'tish full" />
-    <MESSAGE value="export surveys to excel" />
-    <option name="LAST_COMMIT_MESSAGE" value="export surveys to excel" />
+    <option name="LAST_COMMIT_MESSAGE" value="survey create and get" />
   </component>
 </project>
