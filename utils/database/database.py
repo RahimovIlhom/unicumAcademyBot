@@ -161,6 +161,15 @@ class Database:
         """
         await self.execute(sql, preferred_time, telegramId)
 
+    async def user_update_status(self, telegramId, status) -> None:
+        sql = """
+            UPDATE bot_users
+            SET status = %s,
+                updatedAt = UTC_TIMESTAMP()
+            WHERE telegramId = %s
+        """
+        await self.execute(sql, status, telegramId)
+
     async def get_my_results(self, telegramId) -> list[dict]:
         sql = """
             SELECT
@@ -193,3 +202,39 @@ class Database:
             WHERE id = %s;
         """
         return await self.fetchone(sql, session_id)
+
+    async def get_survey(self, telegramId) -> dict:
+        sql = """
+            SELECT
+                id,
+                user_id,
+                age,
+                gender,
+                courseNumber,
+                educationType,
+                educationDirection,
+                englishLevel,
+                englishGoal,
+                daysPerWeek,
+                learningExperience,
+                obstacles,
+                startLearning_importance,
+                importanceRanking,
+                englishProficiency,
+                courseType,
+                conditions,
+                considerEnrollment,
+                freeLessonParticipation
+            FROM surveys
+            WHERE user_id = %s
+            ORDER BY user_id DESC;
+        """
+        return await self.fetchone(sql, telegramId)
+
+    async def survey_update_freeLessonParticipation(self, telegramId, freeLessonParticipation) -> None:
+        sql = """
+            UPDATE surveys
+            SET freeLessonParticipation = %s
+            WHERE user_id = %s
+        """
+        await self.execute(sql, freeLessonParticipation, telegramId)

@@ -34,9 +34,8 @@ async def command_start(message: types.Message, state: FSMContext):
 
 
 async def start_registration(message: types.Message, state: FSMContext):
-    await message.answer("Assalomu alaykum! Unicum Academy o’quv markazining rasmiy botiga "
-                         "xush kelibsiz. Ingliz tili kursiga ro'yxatdan o'tish uchun "
-                         "ism va familiyangizni kiriting:", reply_markup=ReplyKeyboardRemove())
+    await message.answer("Assalomu alaykum! Unicum Academy'ning rasmiy botiga xush kelibsiz. "
+                         "Iltimos, ism va familiyangizni kiriting.", reply_markup=ReplyKeyboardRemove())
     await state.set_state(Registration.name)
 
 
@@ -91,6 +90,7 @@ async def get_phone(message: types.Message, state: FSMContext):
 
 @dp.message(State(None), lambda msg: msg.content_type == ContentType.TEXT and msg.text == "📝 Ro'yxatdan o'tish")
 async def get_registered_type(message: types.Message, state: FSMContext):
+    await message.delete()
     await message.answer(
         "Iltimos, ingliz tilini bilish darajangizni tanlang. "
         "Bu tanlov o‘quv jarayoningizni yanada samarali qilishga yordam beradi. "
@@ -122,12 +122,19 @@ async def get_preferred_time_slot(message: types.Message, state: FSMContext):
     await state.clear()
 
     # Testga taklif qilish
-    await message.answer("✅ Siz muvaffaqiyatli ro'yxatdan o'tdingiz.", reply_markup=await main_menu(telegramId=message.from_user.id))
+    await message.answer("✅ Siz muvaffaqiyatli ro'yxatdan o'tdingiz. Yaqin orada operatorlarimiz siz bilan bog'lanib, darslar boshlanish sani haqida ma'lumot berishadi.",
+                         reply_markup=await main_menu(telegramId=message.from_user.id))
 
 
 @dp.message(StateFilter(Registration))
-async def error_message(message: types.Message):
-    await message.delete()
-    er_msg = await message.answer("⚠️ <b>Xato ma'lumot!</b>\nIltimos, ko'rsatmalarga amal qilgan holda kerakli ma'lumotni to'g'ri formatda kiriting.")
-    await asyncio.sleep(5)
-    await er_msg.delete()
+async def error_message(message: types.Message, state: FSMContext):
+    from .free_lesson_participant import set_free_lesson_participant, set_free_lesson_participant_no
+    if message.text == "✅ Ha, bepul ochiq darsga qatnashib ko'raman":
+        await set_free_lesson_participant(message, state)
+    elif message.text == "❌ Yo'q, hozircha kerak emas":
+        await set_free_lesson_participant_no(message, state)
+    else:
+        await message.delete()
+        er_msg = await message.answer("⚠️ <b>Xato ma'lumot!</b>\nIltimos, ko'rsatmalarga amal qilgan holda kerakli ma'lumotni to'g'ri formatda kiriting.")
+        await asyncio.sleep(5)
+        await er_msg.delete()

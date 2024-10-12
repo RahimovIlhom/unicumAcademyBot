@@ -243,7 +243,7 @@ async def send_message(user_id, considerEnrollment):
 
         payload = {
             'chat_id': user_id,
-            'text': "Bosh menu",
+            'text': "So'rovnomada ishtirok etganingiz uchun rahmat!",
             'parse_mode': 'HTML',
             'reply_markup': reply_markup.dict(include=None, exclude_none=True),
         }

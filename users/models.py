@@ -253,6 +253,7 @@ class Survey(models.Model):
         return self.user.fullname
 
     class Meta:
+        db_table = 'surveys'
         verbose_name = "Survey"
         verbose_name_plural = "Surveys"
         ordering = ['-user__registeredAt']
