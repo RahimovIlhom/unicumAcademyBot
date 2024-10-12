@@ -11,15 +11,15 @@ class ActiveQuestionManager(models.Manager):
 
 
 class Question(models.Model):
-    level = models.CharField(max_length=20, choices=LEVELS)
-    image = models.ImageField(blank=True, null=True, upload_to='questions/images/')
-    question = models.TextField(blank=True, null=True)
-    a = models.CharField(max_length=1000, verbose_name="Correct answer")
-    b = models.CharField(max_length=1000)
-    c = models.CharField(max_length=1000)
-    d = models.CharField(max_length=1000, null=True, blank=True)
-    createdAt = models.DateTimeField(auto_now_add=True)
-    isActive = models.BooleanField(default=True)
+    level = models.CharField(max_length=20, choices=LEVELS, verbose_name="Daraja")
+    image = models.ImageField(blank=True, null=True, upload_to='questions/images/', verbose_name="Rasm")
+    question = models.TextField(blank=True, null=True, verbose_name="Savol")
+    a = models.CharField(max_length=1000, verbose_name="To'g'ri javob")
+    b = models.CharField(max_length=1000, verbose_name="Variant B")
+    c = models.CharField(max_length=1000, verbose_name="Variant C")
+    d = models.CharField(max_length=1000, null=True, blank=True, verbose_name="Variant D")
+    createdAt = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan vaqt")
+    isActive = models.BooleanField(default=True, verbose_name="Faol")
 
     active_objects = ActiveQuestionManager()
     objects = models.Manager()
@@ -33,23 +33,27 @@ class Question(models.Model):
 
     class Meta:
         db_table = 'questions'
+        verbose_name = "Savol "
+        verbose_name_plural = "Savollar"
 
 
 class QuestionResponse(models.Model):
-    user = models.ForeignKey(BotUser, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    test_session = models.ForeignKey('TestSession', on_delete=models.CASCADE, related_name='question_responses')  # Add a ForeignKey to TestSession
-    answer = models.CharField(max_length=1, null=True, blank=True)  # a, b, c, d
-    correct = models.BooleanField(default=False)
+    user = models.ForeignKey(BotUser, on_delete=models.CASCADE, verbose_name="Foydalanuvchi")
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name="Savol")
+    test_session = models.ForeignKey('TestSession', on_delete=models.CASCADE, related_name='question_responses', verbose_name="Test sessiyasi")
+    answer = models.CharField(max_length=1, null=True, blank=True, verbose_name="Javob (a, b, c, d)")
+    correct = models.BooleanField(default=False, verbose_name="To'g'ri javob")
 
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.user} - {self.question}, answer: {self.answer}"
+        return f"{self.user} - {self.question}, javob: {self.answer}"
 
     class Meta:
         db_table = 'question_responses'
         ordering = ['-id']
+        verbose_name = "Savol javobi "
+        verbose_name_plural = "Savol javoblari"
 
 
 class ActiveTestSessionManager(models.Manager):
@@ -58,13 +62,13 @@ class ActiveTestSessionManager(models.Manager):
 
 
 class TestSession(models.Model):
-    user = models.ForeignKey(BotUser, on_delete=models.CASCADE)
-    level = models.CharField(max_length=20, choices=LEVELS)
-    totalQuestions = models.IntegerField(default=20)
-    correctAnswers = models.IntegerField(default=0)
-    completed = models.BooleanField(default=False)
-    createdAt = models.DateTimeField(auto_now_add=True)
-    completedAt = models.DateTimeField(null=True, blank=True)
+    user = models.ForeignKey(BotUser, on_delete=models.CASCADE, verbose_name="Foydalanuvchi")
+    level = models.CharField(max_length=20, choices=LEVELS, verbose_name="Daraja")
+    totalQuestions = models.IntegerField(default=20, verbose_name="Jami savollar")
+    correctAnswers = models.IntegerField(default=0, verbose_name="To'g'ri javoblar soni")
+    completed = models.BooleanField(default=False, verbose_name="Tamomlanganmi?")
+    createdAt = models.DateTimeField(auto_now_add=True, verbose_name="Boshlagan vaqt")
+    completedAt = models.DateTimeField(null=True, blank=True, verbose_name="Tamomlangan vaqt")
 
     objects = models.Manager()
     active_objects = ActiveTestSessionManager()
@@ -75,6 +79,8 @@ class TestSession(models.Model):
     class Meta:
         db_table = 'test_sessions'
         ordering = ['-createdAt']
+        verbose_name = "Test sessiyasi "
+        verbose_name_plural = "Test sessiyalari"
 
     def update_correct_answers(self):
         """This method updates the correct answer count based on the responses."""

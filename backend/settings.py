@@ -150,21 +150,13 @@ JAZZMIN_SETTINGS = {
     ############
     "topmenu_links": [
         {
-            "name": "Excel (Last day)",
-            "url": env.str('EXPORT_EXCEL_URL') + '?period=last_day'
+            "name": "Excel (Foydalanuvchilar)",
+            "url": env.str('EXPORT_EXCEL_URL') + '?period=all'
         },
         {
-            "name": "Excel (Last week)",
-            "url": env.str('EXPORT_EXCEL_URL') + '?period=last_week'
+            "name": "Excel (So'rovnomalar)",
+            "url": env.str('EXPORT_SURVEY_URL') + '?period=all'
         },
-        {
-            "name": "Excel (Last month)",
-            "url": env.str('EXPORT_EXCEL_URL') + '?period=last_month'
-        },
-        # {
-        #     "name": "Excel (All time)",
-        #     "url": env.str('EXPORT_EXCEL_URL') + '?period=all'
-        # },
     ],
 
     #############
@@ -247,7 +239,7 @@ JAZZMIN_UI_TWEAKS = {
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'uz-UZ'
 
 TIME_ZONE = 'Asia/Tashkent'
 

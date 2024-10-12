@@ -3,10 +3,9 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
 import aiohttp
-import xlsxwriter
 from django.db.models import Q
 from django.http import HttpResponse
-from django.utils.timezone import localtime, now
+from django.utils.timezone import now
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view, permission_classes
@@ -15,12 +14,13 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 
-from config import BOT_TOKEN, BOT_ID
+from config import BOT_TOKEN
 from keyboards.default import main_menu, free_lesson_participation
-from loader import dp
-from .models import BotUser, PREFERRED_TIME_SLOTS, LANGUAGES, LEVELS, Survey
+from .models import BotUser, Survey
 from .serializers import LevelsResponseSerializer, SurveyCreateSerializer, SurveyRetrieveSerializer
 from .utils.data import LEVELS_DICT, LEVELS_LIST
+from .utils.surveys_write_excel import export_surveys_to_excel
+from .utils.users_write_excel import export_users_to_excel
 
 
 class ExportUsersToExcel(APIView):
@@ -79,60 +79,7 @@ class ExportUsersToExcel(APIView):
         )
         response['Content-Disposition'] = f'attachment; filename=lids_{filename_period}.xlsx'
 
-        # XlsxWriter bilan yangi workbook yaratish
-        workbook = xlsxwriter.Workbook(response, {'in_memory': True})
-        worksheet = workbook.add_worksheet('Bot Users')
-
-        # Formatting styles
-        bold = workbook.add_format(
-            {'bold': True, 'align': 'center', 'valign': 'vcenter', 'bg_color': '#D7E4BC', 'border': 1})
-        cell_format = workbook.add_format({'border': 1, 'align': 'center', 'valign': 'vcenter'})
-        date_format = workbook.add_format(
-            {'num_format': 'dd-mm-yyyy hh:mm:ss', 'border': 1, 'align': 'center', 'valign': 'vcenter'})
-
-        # Ustunlar uchun sarlavhalar
-        headers = [
-            "Telegram ID", "Full Name", "Telegram Contact", "Phone Number",
-            "Preferred Time Slot", "Language", "Selected Level",
-            "Confirmed Level", "Recommended Level", "Registered At", "Updated At"
-        ]
-
-        # Column widths
-        column_widths = [15, 25, 20, 20, 20, 10, 20, 20, 20, 25, 25]
-
-        # Sarlavhalarni birinchi qatorga qo'shish
-        for col_num, (header, width) in enumerate(zip(headers, column_widths)):
-            worksheet.set_column(col_num, col_num, width)
-            worksheet.write(0, col_num, header, bold)
-
-        # Dictionary'larni bir marta yaratish
-        preferred_time_slots = dict(PREFERRED_TIME_SLOTS)
-        languages = dict(LANGUAGES)
-        levels = dict(LEVELS)
-
-        # Foydalanuvchilar ma'lumotlarini qo'shish
-        for row_num, user in enumerate(bot_users, 1):
-            worksheet.write(row_num, 0, user.telegramId, cell_format)
-            worksheet.write(row_num, 1, user.fullname, cell_format)
-            worksheet.write(row_num, 2, getattr(user, 'telegramContact', '') or '', cell_format)
-            worksheet.write(row_num, 3, getattr(user, 'phoneNumber', '') or '', cell_format)
-
-            # Preferred time slotni string formatida qo'shish
-            worksheet.write(row_num, 4, preferred_time_slots.get(user.preferred_time_slot, 'N/A'), cell_format)
-
-            # Language va Level ma'lumotlarini qo'shish
-            worksheet.write(row_num, 5, languages.get(user.language, 'N/A'), cell_format)
-            worksheet.write(row_num, 6, levels.get(user.selectedLevel, 'N/A'), cell_format)
-            worksheet.write(row_num, 7, levels.get(user.confirmedLevel, 'N/A'), cell_format)
-            worksheet.write(row_num, 8, levels.get(user.recommendedLevel, 'N/A'), cell_format)
-
-            # DateTimeField maydonlarini mahalliy vaqt zonasida formatlash va timezone'ni olib tashlash
-            worksheet.write(row_num, 9, localtime(user.registeredAt).replace(tzinfo=None), date_format)
-            worksheet.write(row_num, 10, localtime(user.updatedAt).replace(tzinfo=None), date_format)
-
-        # Workbookni yopish va javobni qaytarish
-        workbook.close()
-        return response
+        return export_users_to_excel(response, bot_users)
 
 
 @swagger_auto_schema(
@@ -268,3 +215,23 @@ class SurveyRetrieveView(APIView):
         survey = Survey.objects.filter(user=bot_user).order_by('-id').first()
         serializer = self.serializer_class(survey)
         return Response(serializer.data)
+
+
+class ExportSurveysToExcel(APIView):
+    permission_classes = [IsAdminUser]
+
+    # Swagger uchun query parameter va response dokumentatsiyasi
+    @swagger_auto_schema(
+        responses={
+            200: 'Excel fayli muvaffaqiyatli yaratildi va qaytarildi.',
+            500: 'Foydalanuvchilarni yozishda xatolik.'
+        }
+    )
+    def get(self, request):
+        # Javobni Excel formatida HttpResponse orqali qaytarish
+        response = HttpResponse(
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename=surveys_all.xlsx'
+
+        return export_surveys_to_excel(response)
