@@ -5,7 +5,6 @@ from aiogram import types
 from aiogram.enums import ContentType
 from aiogram.filters import StateFilter, CommandStart
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import State
 from aiogram.types import ReplyKeyboardRemove
 
 from config import LEVELS
@@ -27,7 +26,7 @@ async def command_start(message: types.Message, state: FSMContext):
                 f"Hurmatli {user.get('fullname')}! Unicum Academy'da ingliz tili kurslariga yozilmoqchimisiz yoki so'rovnomada ishtirok etmoqchimisiz?",
                 reply_markup=await registered_types(message.from_user.id)
             )
-            await state.clear()
+            await state.set_state(Registration.registered_type)
             return
         await message.answer("Bosh menyu", reply_markup=await main_menu(telegramId=message.from_user.id))
         await state.clear()
@@ -85,10 +84,10 @@ async def get_phone(message: types.Message, state: FSMContext):
         f"Hurmatli {data.get('fullname')}! Unicum Academy'da ingliz tili kurslariga yozilmoqchimisiz yoki so'rovnomada ishtirok etmoqchimisiz?",
         reply_markup=await registered_types(message.from_user.id)
     )
-    await state.clear()
+    await state.set_state(Registration.registered_type)
 
 
-@dp.message(State(None), lambda msg: msg.content_type == ContentType.TEXT and msg.text == "📝 Ro'yxatdan o'tish")
+@dp.message(Registration.registered_type, lambda msg: msg.content_type == ContentType.TEXT and msg.text == "📝 Ro'yxatdan o'tish")
 async def get_registered_type(message: types.Message, state: FSMContext):
     await message.delete()
     await message.answer(
@@ -128,13 +127,7 @@ async def get_preferred_time_slot(message: types.Message, state: FSMContext):
 
 @dp.message(StateFilter(Registration))
 async def error_message(message: types.Message, state: FSMContext):
-    from .free_lesson_participant import set_free_lesson_participant, set_free_lesson_participant_no
-    if message.text == "✅ Ha, bepul ochiq darsga qatnashib ko'raman":
-        await set_free_lesson_participant(message, state)
-    elif message.text == "❌ Yo'q, hozircha kerak emas":
-        await set_free_lesson_participant_no(message, state)
-    else:
-        await message.delete()
-        er_msg = await message.answer("⚠️ <b>Xato ma'lumot!</b>\nIltimos, ko'rsatmalarga amal qilgan holda kerakli ma'lumotni to'g'ri formatda kiriting.")
-        await asyncio.sleep(5)
-        await er_msg.delete()
+    await message.delete()
+    er_msg = await message.answer("⚠️ <b>Xato ma'lumot!</b>\nIltimos, ko'rsatmalarga amal qilgan holda kerakli ma'lumotni to'g'ri formatda kiriting.")
+    await asyncio.sleep(5)
+    await er_msg.delete()
