@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="additional phone != telegram phone">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="admin view update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/django_jazmin/css/custom_jazmin.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/django_jazmin/css/custom_jazmin.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/django_jazmin/js/custom_jazmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/django_jazmin/js/custom_jazmin.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +146,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728826631440</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="admin view update">
+      <option name="closed" value="true" />
+      <created>1728834446395</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1728834446395</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -157,6 +165,7 @@
     <MESSAGE value="allowed hosts update" />
     <MESSAGE value="last changes" />
     <MESSAGE value="additional phone != telegram phone" />
-    <option name="LAST_COMMIT_MESSAGE" value="additional phone != telegram phone" />
+    <MESSAGE value="admin view update" />
+    <option name="LAST_COMMIT_MESSAGE" value="admin view update" />
   </component>
 </project>
