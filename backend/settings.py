@@ -150,11 +150,11 @@ JAZZMIN_SETTINGS = {
     ############
     "topmenu_links": [
         {
-            "name": "Excel (Foydalanuvchilar)",
+            "name": "Excel (Users)",
             "url": env.str('EXPORT_EXCEL_URL') + '?period=all'
         },
         {
-            "name": "Excel (So'rovnomalar)",
+            "name": "Excel (Surveys)",
             "url": env.str('EXPORT_SURVEY_URL') + '?period=all'
         },
     ],
@@ -191,8 +191,8 @@ JAZZMIN_SETTINGS = {
     #############
     # UI Tweaks #
     #############
-    "custom_css": None,
-    "custom_js": None,
+    "custom_css": 'django_jazmin/css/custom_jazmin.css',
+    "custom_js": 'django_jazmin/js/custom_jazmin.js',
     "use_google_fonts_cdn": True,
     "show_ui_builder": False,
 

@@ -1,0 +1,37 @@
+/* Kichik ekranlar uchun menyu */
+@media (max-width: 576px) {
+    #jazzy-navbar {
+        display: flex !important; /* Navbarni flex qilib qo'yish */
+        flex-direction: column; /* Elementlarni ustun qilib joylashtirish */
+        width: 100%; /* Kenglikni 100% qilib qo'yish */
+    }
+
+    .navbar-nav {
+        display: block !important; /* Nav elementlarini ko'rinishda saqlash */
+        width: 100%; /* Nav elementlarini kengaytirish */
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%; /* Nav item'lar kengligini 100% qilib qo'yish */
+    }
+
+    .navbar-toggler {
+        display: block !important; /* Toggling tugmasini ko'rsatish */
+    }
+}
+
+/* Katta ekranlar uchun menyu */
+@media (min-width: 576px) {
+    #jazzy-navbar {
+        display: flex !important; /* Navbarni flex qilib qo'yish */
+        flex-direction: row; /* Elementlarni gorizontal joylashtirish */
+    }
+
+    .navbar-nav {
+        display: flex !important; /* Nav elementlarini gorizontal ko'rinishda saqlash */
+    }
+
+    .navbar-toggler {
+        display: none !important; /* Toggling tugmasini yashirish */
+    }
+}
