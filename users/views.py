@@ -11,7 +11,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import get_object_or_404
-from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED, HTTP_200_OK
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
@@ -160,7 +160,7 @@ class SurveyCreateView(APIView):
 
             self.run_in_background(send_message, bot_user.telegramId, serializer.data.get('considerEnrollment'))
 
-            return Response(serializer.data, status=HTTP_201_CREATED)
+            return Response(serializer.data, status=HTTP_200_OK)
 
 
     def run_in_background(self, func, *args):
