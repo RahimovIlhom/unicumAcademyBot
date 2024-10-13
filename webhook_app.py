@@ -1,4 +1,5 @@
 import logging
+import ssl
 # import ssl
 import sys
 
@@ -21,8 +22,8 @@ WEBHOOK_PATH = env.str('WEBHOOK_PATH')
 WEBHOOK_SECRET = env.str('WEBHOOK_SECRET')
 BASE_WEBHOOK_URL = env.str('BASE_WEBHOOK_URL')
 
-# WEBHOOK_SSL_CERT = env.str('WEBHOOK_SSL_CERT')
-# WEBHOOK_SSL_PRIV = env.str('WEBHOOK_SSL_PRIV')
+WEBHOOK_SSL_CERT = env.str('WEBHOOK_SSL_CERT')
+WEBHOOK_SSL_PRIV = env.str('WEBHOOK_SSL_PRIV')
 
 
 async def on_startup() -> None:
@@ -46,8 +47,8 @@ def main() -> None:
 
     setup_application(app, dp, bot=bot)
 
-    # context = ssl.create_default_context()
-    # context.load_cert_chain(WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV)
+    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    context.load_cert_chain(WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV)
 
     web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
 
