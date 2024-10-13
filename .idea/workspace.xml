@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="admin view update">
+    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="custom js updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/django_jazmin/css/custom_jazmin.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/django_jazmin/css/custom_jazmin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/django_jazmin/js/custom_jazmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/django_jazmin/js/custom_jazmin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728834446395</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="custom js updated">
+      <option name="closed" value="true" />
+      <created>1728835874346</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1728835874346</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -166,6 +173,7 @@
     <MESSAGE value="last changes" />
     <MESSAGE value="additional phone != telegram phone" />
     <MESSAGE value="admin view update" />
-    <option name="LAST_COMMIT_MESSAGE" value="admin view update" />
+    <MESSAGE value="custom js updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="custom js updated" />
   </component>
 </project>
