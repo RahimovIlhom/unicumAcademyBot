@@ -66,10 +66,10 @@ async def get_phone(message: types.Message, state: FSMContext):
     # Telefon raqamni barcha bo'shliqlar, nuqtalar, qavslar va tirelardan tozalash
     phone = re.sub(r"[\+\-\(\)\s\.]", "", phone)
 
-    if phone in data.get('contact'):
-        await message.answer("Qo'shimcha telefon raqami telegram kontaktingiz bilan bir xil bo'lmasligi kerak.\n"
-                             "Iltimos, qaytadan kiriting:", reply_markup=ReplyKeyboardRemove())
-        return
+    # if phone in data.get('contact'):
+    #     await message.answer("Qo'shimcha telefon raqami telegram kontaktingiz bilan bir xil bo'lmasligi kerak.\n"
+    #                          "Iltimos, qaytadan kiriting:", reply_markup=ReplyKeyboardRemove())
+    #     return
 
     # Telefon raqamni yangilangan holda 998XXXXXXX formatida saqlash
     if phone.startswith("998"):

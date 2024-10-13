@@ -181,7 +181,7 @@ async def send_message(user_id, considerEnrollment):
 
         payload = {
             'chat_id': user_id,
-            'text': "So'rovnomada ishtirok etganingiz uchun rahmat! O'quv markazimizga qiziqish bildiribsiz, sizni bepul ochiq darsimizga yozib qo'ysam bo'ladimi?",
+            'text': "So'rovnomada ishtirok etganingiz uchun rahmat! O'quv markazimizga qiziqish bildiribsiz, bepul ochiq darsimizda ishtirok etib ko'rasizmi?",
             'parse_mode': 'HTML',
             'reply_markup': reply_markup.dict(include=None, exclude_none=True),
         }
