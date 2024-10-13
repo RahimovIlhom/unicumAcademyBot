@@ -19,10 +19,12 @@ class BotUserSerializer(serializers.ModelSerializer):
 
 class SurveyCreateSerializer(serializers.ModelSerializer):
     obstacles = serializers.ListField(
-        child=serializers.ChoiceField(choices=OBSTACLE_CHOICES)
+        child=serializers.ChoiceField(choices=OBSTACLE_CHOICES),
+        required=False
     )
     conditions = serializers.ListField(
-        child=serializers.ChoiceField(choices=CONDITIONS_CHOICES)
+        child=serializers.ChoiceField(choices=CONDITIONS_CHOICES),
+        required=False
     )
     class Meta:
         model = Survey
