@@ -4,7 +4,7 @@ from .models import BotUser, Survey
 
 
 class BotUserAdmin(admin.ModelAdmin):
-    list_display = ['fullname', 'telegramContact', 'phoneNumber', 'selectedLevel', 'confirmedLevel', 'preferred_time_slot', 'registeredType', 'registeredAt', 'updatedAt']
+    list_display = ['fullname', 'telegramContact', 'phoneNumber', 'selectedLevel', 'confirmedLevel', 'preferred_time_slot', 'registeredType', 'registeredAt']
     list_filter = ['selectedLevel', 'confirmedLevel', 'recommendedLevel']
     search_fields = ['telegramId', 'fullname', 'telegramContact', 'phoneNumber']
 
@@ -33,6 +33,7 @@ class SurveyAdmin(admin.ModelAdmin):
         'courseType',
         'considerEnrollment',
         'freeLessonParticipation',
+        'get_registeredAt'
     )
 
     list_filter = ('age', 'gender', 'courseNumber', 'englishLevel', 'daysPerWeek', 'courseType', 'considerEnrollment',
@@ -41,7 +42,7 @@ class SurveyAdmin(admin.ModelAdmin):
     search_fields = ('user__fullname', 'user__telegramContact', 'user__phoneNumber', 'age', 'gender', 'educationDirection')
 
     def get_queryset(self, request):
-        queryset = super().get_queryset(request)
+        queryset = super().get_queryset(request).order_by('-user__registeredAt')
         return queryset
 
     def get_fullname(self, obj):
@@ -61,6 +62,12 @@ class SurveyAdmin(admin.ModelAdmin):
 
     get_phone_number.admin_order_field = 'user__phoneNumber'
     get_phone_number.short_description = 'Telefon raqami'
+
+    def get_registeredAt(self, obj):
+        return obj.user.registeredAt
+
+    get_registeredAt.admin_order_field = 'user__registeredAt'
+    get_registeredAt.short_description = 'Ro\'yxatdan o\'tgan vaqt'
 
 
 admin.site.register(BotUser, BotUserAdmin)
