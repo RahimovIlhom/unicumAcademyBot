@@ -1,4 +1,5 @@
 import asyncio
+import threading
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
@@ -10,6 +11,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import get_object_or_404
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED, HTTP_200_OK
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
@@ -125,6 +127,9 @@ def get_levels_for_telegram_user(request):
     return Response({'levels': levels_data}, status=200)
 
 
+lock = threading.Lock()
+
+
 class SurveyCreateView(APIView):
     permission_classes = [AllowAny]
     serializer_class = SurveyCreateSerializer
@@ -141,21 +146,22 @@ class SurveyCreateView(APIView):
         user_id = request.data.get('user')
         bot_user = get_object_or_404(BotUser, telegramId=user_id)
 
-        # Serializerdan foydalanish
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        with lock:
+            if Survey.objects.filter(user=bot_user).exists():
+                return Response({"detail": "User has already submitted a survey."}, status=HTTP_400_BAD_REQUEST)
 
-        # BotUser statusini yangilash
-        bot_user.status = 'registered'
-        bot_user.registeredType = 'survey'
-        bot_user.save()
+            serializer = self.serializer_class(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
 
-        # Xabar yuborish va holatni orqa fonda yangilash
-        self.run_in_background(send_message, bot_user.telegramId, serializer.data.get('considerEnrollment'))
+            bot_user.status = 'registered'
+            bot_user.registeredType = 'survey'
+            bot_user.save()
 
-        # API response
-        return Response(serializer.data)
+            self.run_in_background(send_message, bot_user.telegramId, serializer.data.get('considerEnrollment'))
+
+            return Response(serializer.data, status=HTTP_200_OK)
+
 
     def run_in_background(self, func, *args):
         def wrapper():
@@ -181,7 +187,7 @@ async def send_message(user_id, considerEnrollment):
 
         payload = {
             'chat_id': user_id,
-            'text': "So'rovnomada ishtirok etganingiz uchun rahmat! O'quv markazimizga qiziqish bildiribsiz, sizni bepul ochiq darsimizga yozib qo'ysam bo'ladimi?",
+            'text': "So'rovnomada ishtirok etganingiz uchun rahmat! O'quv markazimizga qiziqish bildiribsiz, bepul ochiq darsimizda ishtirok etib ko'rasizmi?",
             'parse_mode': 'HTML',
             'reply_markup': reply_markup.dict(include=None, exclude_none=True),
         }

@@ -18,7 +18,7 @@ SECRET_KEY = env.str('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'unicum.usat.uz', 'temporary-api.usat.uz', 'webhook.usat.uz']
 
 
 # Application definition
@@ -150,11 +150,11 @@ JAZZMIN_SETTINGS = {
     ############
     "topmenu_links": [
         {
-            "name": "Excel (Foydalanuvchilar)",
+            "name": "Excel (Users)",
             "url": env.str('EXPORT_EXCEL_URL') + '?period=all'
         },
         {
-            "name": "Excel (So'rovnomalar)",
+            "name": "Excel (Surveys)",
             "url": env.str('EXPORT_SURVEY_URL') + '?period=all'
         },
     ],
@@ -191,8 +191,8 @@ JAZZMIN_SETTINGS = {
     #############
     # UI Tweaks #
     #############
-    "custom_css": None,
-    "custom_js": None,
+    "custom_css": 'django_jazmin/css/custom_jazmin.css',
+    "custom_js": 'django_jazmin/js/custom_jazmin.js',
     "use_google_fonts_cdn": True,
     "show_ui_builder": False,
 

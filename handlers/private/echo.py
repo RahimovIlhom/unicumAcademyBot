@@ -28,5 +28,6 @@ async def echo(message: Message, state: FSMContext):
             )
             await state.clear()
             return
-        # await message.answer("Bosh menyu", reply_markup=await main_menu(telegramId=message.from_user.id))
-        # await state.clear()
+        await message.answer("Bosh menyu", reply_markup=await main_menu(telegramId=message.from_user.id))
+        await message.delete()
+        await state.clear()
