@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="users filter updated">
-      <change beforePath="$PROJECT_DIR$/users/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/admin.py" afterDir="false" />
+    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="registeredType default registration">
+      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +178,23 @@
       <option name="project" value="LOCAL" />
       <updated>1728995105871</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="users filter updated">
+      <option name="closed" value="true" />
+      <created>1728995244531</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1728995244531</updated>
+    </task>
+    <task id="LOCAL-00012" summary="registeredType default registration">
+      <option name="closed" value="true" />
+      <created>1728995439530</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1728995439530</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -191,6 +207,7 @@
     <MESSAGE value="users admin updated" />
     <MESSAGE value="surveys admins order by registered at" />
     <MESSAGE value="users filter updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="users filter updated" />
+    <MESSAGE value="registeredType default registration" />
+    <option name="LAST_COMMIT_MESSAGE" value="registeredType default registration" />
   </component>
 </project>

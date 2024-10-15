@@ -54,7 +54,7 @@ class BotUser(models.Model):
     confirmedLevel = models.CharField(max_length=20, choices=LEVELS, default=None, blank=True, null=True, verbose_name="Tasdiqlangan daraja")
     recommendedLevel = models.CharField(max_length=20, choices=LEVELS, default=None, blank=True, null=True, verbose_name="Tavsiya etilgan daraja")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft', verbose_name="Holat")
-    registeredType = models.CharField(max_length=20, choices=REGISTERED_TYPES, default='registration', verbose_name="Ro'yxatdan o'tish turi")
+    registeredType = models.CharField(max_length=20, choices=REGISTERED_TYPES, blank=True, null=True, verbose_name="Ro'yxatdan o'tish turi")
     registeredAt = models.DateTimeField(auto_now_add=True, verbose_name="Ro'yxatdan o'tgan vaqt")
     updatedAt = models.DateTimeField(auto_now=True, verbose_name="Yangilangan vaqt")
 
