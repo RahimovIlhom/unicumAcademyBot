@@ -9,7 +9,7 @@ class BotUserAdmin(admin.ModelAdmin):
     search_fields = ['telegramId', 'fullname', 'telegramContact', 'phoneNumber']
 
     def get_queryset(self, request):
-        queryset = super().get_queryset(request).filter(registeredType='registration')
+        queryset = super().get_queryset(request).filter(registeredType='registration' or None)
         return queryset
 
 
