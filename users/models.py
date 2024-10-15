@@ -42,7 +42,7 @@ REGISTERED_TYPES = (
 
 class BotUser(models.Model):
     telegramId = models.BigIntegerField(primary_key=True, verbose_name="Telegram ID")
-    fullname = models.CharField(max_length=255, verbose_name="F.I.Sh.")
+    fullname = models.CharField(max_length=255, verbose_name="FISh")
     telegramContact = models.CharField(max_length=20, blank=True, null=True, verbose_name="Telegram kontakti")
     phoneNumber = models.CharField(max_length=20, blank=True, null=True, verbose_name="Telefon raqami")
     preferred_time_slot = models.IntegerField(
