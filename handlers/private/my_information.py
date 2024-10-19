@@ -45,7 +45,7 @@ async def my_information(message: Message):
         f"📝 <b>Sizning ma'lumotlaringiz:</b>\n\n"
         f"👤 <b>Ism-familiya:</b> {user['fullname']}\n"
         f"📱 <b>Telegram kontakt:</b> {user['telegramContact'][3:]}\n"
-        f"📞 <b>Qo'shimcha raqam:</b> {user['phoneNumber'][3:]}\n"
+        f"📞 <b>Qo'shimcha raqam:</b> {user['phoneNumber'][3:] if user['phoneNumber'] else 'Mavjud emas'}\n"
         f"⭐ <b>Daraja:</b> {confirmed_level or selected_level}\n"
         f"{recommended_text}"
         f"🕒 <b>Kurs uchun qulay vaqt:</b> {PREFERRED_TIME_SLOTS_DICT.get(user['preferred_time_slot'], 'Mavjud emas')}\n"

@@ -61,7 +61,7 @@ class Database:
             self.pool.close()
             await self.pool.wait_closed()
 
-    async def add_draft_user(self, telegramId, fullname: str, contact: str, phone: str, *args, **kwargs):
+    async def add_draft_user(self, telegramId, fullname: str, contact: str, phone: str | None = None, *args, **kwargs):
         sql = """
             INSERT INTO bot_users 
                 (telegramId,
