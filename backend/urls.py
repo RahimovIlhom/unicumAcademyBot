@@ -17,20 +17,20 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="ilhomjonpersonal@gmail.com"),
         license=openapi.License(name="Unicum License"),
     ),
-    public=True,
-    permission_classes=[permissions.AllowAny],
-    # permission_classes=[permissions.IsAuthenticated],
+    public=False,
+    # permission_classes=[permissions.AllowAny],
+    permission_classes=[permissions.IsAuthenticated],
 )
 
 urlpatterns = [
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('api/docs/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('api/docs/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    # path('api/docs/swagger/', login_required(schema_view.with_ui('swagger', cache_timeout=0)), name='schema-swagger-ui'),
-    # path('api/docs/redoc/', login_required(schema_view.with_ui('redoc', cache_timeout=0)), name='schema-redoc'),
+    # path('api/docs/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    # path('api/docs/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('api/docs/swagger/', login_required(schema_view.with_ui('swagger', cache_timeout=0)), name='schema-swagger-ui'),
+    path('api/docs/redoc/', login_required(schema_view.with_ui('redoc', cache_timeout=0)), name='schema-redoc'),
     path('', include('home.urls')),
     path('admin/', admin.site.urls),
-    path('api/v1/users/', include('users.urls')),
+    path('api/v1/', include('users.urls')),
     path('api/v1/tests/', include('tests.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('accounts/', include('django.contrib.auth.urls'))

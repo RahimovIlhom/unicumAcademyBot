@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="registeredType null true, blank true">
+    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="remove additional phone number">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/private/my_information.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/private/my_information.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/private/registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/private/registration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/states/registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/states/registration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/database/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/database/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers/users_serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views/users_views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +59,12 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/users/serializers" />
+      <recent name="$PROJECT_DIR$/users/views" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="unicum-bot" />
@@ -206,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728995832273</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="remove additional phone number">
+      <option name="closed" value="true" />
+      <created>1729321519323</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1729321519323</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -221,6 +237,7 @@
     <MESSAGE value="users filter updated" />
     <MESSAGE value="registeredType default registration" />
     <MESSAGE value="registeredType null true, blank true" />
-    <option name="LAST_COMMIT_MESSAGE" value="registeredType null true, blank true" />
+    <MESSAGE value="remove additional phone number" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove additional phone number" />
   </component>
 </project>

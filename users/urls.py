@@ -1,12 +1,15 @@
 from django.urls import path
 
-from .views import ExportUsersToExcel, get_levels_for_telegram_user, SurveyCreateView, SurveyRetrieveView, \
+from .views.users_views import ExportUsersToExcel, get_levels_for_telegram_user, SurveyCreateView, SurveyRetrieveView, \
     ExportSurveysToExcel
+from .views.stats_views import GenderStatsAPIView
 
 urlpatterns = [
-    path('export/excel/', ExportUsersToExcel.as_view(), name='export_excel'),
-    path('levels/bot-user/', get_levels_for_telegram_user, name='get_levels_for_telegram_user'),
-    path('survey/create/', SurveyCreateView.as_view(), name='survey_create'),
-    path('survey/<int:userId>/', SurveyRetrieveView.as_view(), name='survey_update'),
-    path('export/survey/', ExportSurveysToExcel.as_view(), name='export_survey'),
+    path('users/export/excel/', ExportUsersToExcel.as_view(), name='export_excel'),
+    path('users/levels/bot-user/', get_levels_for_telegram_user, name='get_levels_for_telegram_user'),
+    path('users/survey/create/', SurveyCreateView.as_view(), name='survey_create'),
+    path('users/survey/<int:userId>/', SurveyRetrieveView.as_view(), name='survey_update'),
+    path('users/export/survey/', ExportSurveysToExcel.as_view(), name='export_survey'),
+
+    path('stats/genders/', GenderStatsAPIView.as_view(), name='get_genders_stats'),
 ]

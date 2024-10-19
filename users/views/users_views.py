@@ -18,11 +18,11 @@ from rest_framework.response import Response
 
 from config import BOT_TOKEN
 from keyboards.default import main_menu, free_lesson_participation
-from .models import BotUser, Survey
-from .serializers import LevelsResponseSerializer, SurveyCreateSerializer, SurveyRetrieveSerializer
-from .utils.data import LEVELS_DICT, LEVELS_LIST
-from .utils.surveys_write_excel import export_surveys_to_excel
-from .utils.users_write_excel import export_users_to_excel
+from users.models import BotUser, Survey
+from users.serializers.users_serializers import LevelsResponseSerializer, SurveyCreateSerializer, SurveyRetrieveSerializer
+from users.utils.data import LEVELS_DICT, LEVELS_LIST
+from users.utils.surveys_write_excel import export_surveys_to_excel
+from users.utils.users_write_excel import export_users_to_excel
 
 
 class ExportUsersToExcel(APIView):

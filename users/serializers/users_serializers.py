@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import BotUser, Survey, OBSTACLE_CHOICES, CONDITIONS_CHOICES
+from users.models import BotUser, Survey, OBSTACLE_CHOICES, CONDITIONS_CHOICES
 
 
 class LevelSerializer(serializers.Serializer):

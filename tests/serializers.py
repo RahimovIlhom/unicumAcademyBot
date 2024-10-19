@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from tests.models import TestSession
-from users.serializers import BotUserSerializer
+from users.serializers.users_serializers import BotUserSerializer
 
 
 class QuestionOptionSerializer(serializers.Serializer):
