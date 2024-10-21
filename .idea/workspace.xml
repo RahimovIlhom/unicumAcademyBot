@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="genders stats">
+    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="genders, age, course stats">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/serializers/stats_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers/stats_serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
@@ -227,7 +227,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729326345952</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="genders, age, course stats">
+      <option name="closed" value="true" />
+      <created>1729338854943</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1729338854943</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -244,6 +252,7 @@
     <MESSAGE value="registeredType null true, blank true" />
     <MESSAGE value="remove additional phone number" />
     <MESSAGE value="genders stats" />
-    <option name="LAST_COMMIT_MESSAGE" value="genders stats" />
+    <MESSAGE value="genders, age, course stats" />
+    <option name="LAST_COMMIT_MESSAGE" value="genders, age, course stats" />
   </component>
 </project>
