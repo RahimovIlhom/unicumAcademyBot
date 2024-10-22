@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="server stats APIs">
+    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="stats updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/views/all_stats.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views/all_stats.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729497559840</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="stats updated">
+      <option name="closed" value="true" />
+      <created>1729580065080</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1729580065080</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -261,6 +268,7 @@
     <MESSAGE value="genders stats" />
     <MESSAGE value="genders, age, course stats" />
     <MESSAGE value="server stats APIs" />
-    <option name="LAST_COMMIT_MESSAGE" value="server stats APIs" />
+    <MESSAGE value="stats updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="stats updated" />
   </component>
 </project>
