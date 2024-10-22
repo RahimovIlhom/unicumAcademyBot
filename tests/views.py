@@ -201,5 +201,6 @@ async def recommending_level_to_user(user: BotUser, test_session: TestSession):
         user.recommendedLevel = test_session.level
     else:
         user.recommendedLevel = LEVELS_LIST[LEVELS_DICT[test_session.level] - 1 if test_session.level != 'beginner' else 0]
+    user.status = 'test_taken'
 
     await sync_to_async(user.save)()
