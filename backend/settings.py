@@ -150,6 +150,11 @@ JAZZMIN_SETTINGS = {
     ############
     "topmenu_links": [
         {
+            "name": "Statistics",
+            "url": env.str('STATS_URL'),
+            "new_window": True
+        },
+        {
             "name": "Excel (Users)",
             "url": env.str('EXPORT_EXCEL_URL') + '?period=all'
         },
