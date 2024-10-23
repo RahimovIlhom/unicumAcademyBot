@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="stats names updates">
+    <list default="true" id="2b1d4e7a-7ad7-495f-954a-592f6b9a7563" name="Changes" comment="statistics page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/private/registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/private/registration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/states/registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/states/registration.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729594747299</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="statistics page">
+      <option name="closed" value="true" />
+      <created>1729597330979</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1729597330979</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -278,6 +287,7 @@
     <MESSAGE value="server stats APIs" />
     <MESSAGE value="stats updated" />
     <MESSAGE value="stats names updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="stats names updates" />
+    <MESSAGE value="statistics page" />
+    <option name="LAST_COMMIT_MESSAGE" value="statistics page" />
   </component>
 </project>

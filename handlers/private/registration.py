@@ -51,6 +51,31 @@ async def get_name(message: types.Message, state: FSMContext):
 @dp.message(Registration.contact, lambda msg: msg.content_type==ContentType.CONTACT)
 async def get_contact(message: types.Message, state: FSMContext):
     await state.update_data(contact=message.contact.phone_number.replace('+', ''))
+    await message.answer("Siz bilan bog’lanishimiz uchun qo'shimcha telefon raqamini kiriting:\n"
+                         "Masalan: +998901234567", reply_markup=ReplyKeyboardRemove())
+    await state.set_state(Registration.phone)
+
+
+# Qo'shimcha telefon raqamini qabul qilish
+@dp.message(Registration.phone,
+            lambda msg: msg.content_type == ContentType.TEXT and re.match(r"^\+?[(]?(998)?[)]?[-\s\.]?([0-9]{2})[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{2}[-\s\.]?[0-9]{2}$", msg.text))
+async def get_phone(message: types.Message, state: FSMContext):
+    phone = message.text
+
+    # Telefon raqamni barcha bo'shliqlar, nuqtalar, qavslar va tirelardan tozalash
+    phone = re.sub(r"[\+\-\(\)\s\.]", "", phone)
+
+    # if phone in data.get('contact'):
+    #     await message.answer("Qo'shimcha telefon raqami telegram kontaktingiz bilan bir xil bo'lmasligi kerak.\n"
+    #                          "Iltimos, qaytadan kiriting:", reply_markup=ReplyKeyboardRemove())
+    #     return
+
+    # Telefon raqamni yangilangan holda 998XXXXXXX formatida saqlash
+    if phone.startswith("998"):
+        await state.update_data(phone=phone)
+    else:
+        await state.update_data(phone=f"998{phone}")
+
     data = await state.get_data()
     await db.add_draft_user(**data)
 
@@ -59,39 +84,6 @@ async def get_contact(message: types.Message, state: FSMContext):
         reply_markup=await registered_types(message.from_user.id)
     )
     await state.set_state(Registration.registered_type)
-    # await message.answer("Siz bilan bog’lanishimiz uchun qo'shimcha telefon raqamini kiriting:\n"
-    #                      "Masalan: +998901234567", reply_markup=ReplyKeyboardRemove())
-    # await state.set_state(Registration.phone)
-
-
-# Qo'shimcha telefon raqamini qabul qilish
-# @dp.message(Registration.phone,
-#             lambda msg: msg.content_type == ContentType.TEXT and re.match(r"^\+?[(]?(998)?[)]?[-\s\.]?([0-9]{2})[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{2}[-\s\.]?[0-9]{2}$", msg.text))
-# async def get_phone(message: types.Message, state: FSMContext):
-#     phone = message.text
-#
-#     # Telefon raqamni barcha bo'shliqlar, nuqtalar, qavslar va tirelardan tozalash
-#     phone = re.sub(r"[\+\-\(\)\s\.]", "", phone)
-#
-#     # if phone in data.get('contact'):
-#     #     await message.answer("Qo'shimcha telefon raqami telegram kontaktingiz bilan bir xil bo'lmasligi kerak.\n"
-#     #                          "Iltimos, qaytadan kiriting:", reply_markup=ReplyKeyboardRemove())
-#     #     return
-#
-#     # Telefon raqamni yangilangan holda 998XXXXXXX formatida saqlash
-#     if phone.startswith("998"):
-#         await state.update_data(phone=phone)
-#     else:
-#         await state.update_data(phone=f"998{phone}")
-#
-#     data = await state.get_data()
-#     await db.add_draft_user(**data)
-#
-#     await message.answer(
-#         f"Hurmatli {data.get('fullname')}! Unicum Academy'da ingliz tili kurslariga yozilmoqchimisiz yoki so'rovnomada ishtirok etmoqchimisiz?",
-#         reply_markup=await registered_types(message.from_user.id)
-#     )
-#     await state.set_state(Registration.registered_type)
 
 
 @dp.message(Registration.registered_type, lambda msg: msg.content_type == ContentType.TEXT and msg.text == "📝 Ro'yxatdan o'tish")
